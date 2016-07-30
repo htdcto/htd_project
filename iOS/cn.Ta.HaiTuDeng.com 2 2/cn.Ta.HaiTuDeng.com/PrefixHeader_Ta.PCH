@@ -1,0 +1,58 @@
+//
+//  PrefixHeader_Ta.PCH
+//  cn.Ta.HaiTuDeng.com
+//
+//  Created by piupiupiu on 16/7/20.
+//  Copyright © 2016年 haitudeng. All rights reserved.
+//
+
+#ifndef PrefixHeader_Ta_PCH
+#define PrefixHeader_Ta_PCH
+#define totalPages 1
+//登录
+#define LOGIN @"http://192.168.1.108/ta/login.php"
+//注册
+#define REGISTER @"http://192.168.1.108/ta/register.php"
+//上传
+#define SHUJUUP @"http://192.168.1.108/ta/timeup.php"
+//下载
+#define SHUJUDOWN @"http://192.168.1.108/ta/timedown.php"
+//上传背景图片
+#define BACKIMAGE @"http://192.168.1.108/ta/backimageup.php"
+
+//上传状态
+#define STATUS  @"http://192.168.1.108/ta/ingimageup.php"
+
+//获取对方用户名
+#define GEINEME  @"http://192.168.1.108/ta/getTtel.php"
+//删除对方状态
+#define DELETEIMAGE  @"http://192.168.1.108/ta/ingimagedelete.php"
+//第三方库的pch
+#import "Define.h"
+#import "AFNetworking.h"
+#import "AYPageControl.h"
+#import "MMDrawerController.h"//侧滑
+
+#import "UIView+GetViewController.h"
+
+//引导页
+#import "UserGuideViewController.h"
+
+//登录界面
+#import "ViewController.h"
+
+
+#import "MainAryViewController.h"//心界面
+#import "StatusViewController.h"//状态界面
+#import "MEViewController.h"//个人中心界面
+#import "InformationViewController.h"//资讯界面
+#import "RightViewController.h"//右滑视图
+#import "AppDelegate.h"
+
+// 小视图
+
+//折线图
+#import "ChartView.h"
+
+
+#endif /* PrefixHeader_Ta_PCH */
