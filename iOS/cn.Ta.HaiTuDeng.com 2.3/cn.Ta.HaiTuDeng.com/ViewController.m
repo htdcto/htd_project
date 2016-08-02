@@ -64,6 +64,18 @@
     NSDictionary *dic = @{@"Utel":name,@"Upass":pass};
     [LDXNetWork PostThePHPWithURL:REGISTER par:dic image:image uploadName:@"uploadimageFile" success:^(id response) {
         NSString *success = response[@"success"];
+        /*NSInteger *success1 = [success intValue];
+        
+        switch (success1) {
+            case <#constant#>:
+                <#statements#>
+                break;
+                
+            default:
+                break;
+        }
+        */
+        
         if ([success isEqualToString:@"1"]) {
             [self showTheAlertView:self andAfterDissmiss:1.5 title:@"注册成功" message:@""];
             [_longinR goToLoginView];

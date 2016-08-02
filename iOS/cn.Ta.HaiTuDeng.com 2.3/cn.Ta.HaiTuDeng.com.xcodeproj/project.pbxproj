@@ -10,6 +10,7 @@
 		69F85B1A1D40DCB900BD8484 /* ChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69F85B191D40DCB900BD8484 /* ChartView.m */; };
 		69F85B1E1D41163500BD8484 /* MainTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69F85B1C1D41163500BD8484 /* MainTableViewCell.m */; };
 		69F85B1F1D41163500BD8484 /* MainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 69F85B1D1D41163500BD8484 /* MainTableViewCell.xib */; };
+		69FC4D381D4F6E290052D711 /* ShareActionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69FC4D371D4F6E290052D711 /* ShareActionView.m */; };
 		FB0C61561D47A15400492FA2 /* MMDrawerBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FB0C614E1D47A15400492FA2 /* MMDrawerBarButtonItem.m */; };
 		FB0C61571D47A15400492FA2 /* MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB0C61511D47A15400492FA2 /* MMDrawerController.m */; };
 		FB0C61581D47A15400492FA2 /* MMDrawerVisualState.m in Sources */ = {isa = PBXBuildFile; fileRef = FB0C61531D47A15400492FA2 /* MMDrawerVisualState.m */; };
@@ -98,6 +99,8 @@
 		69F85B1B1D41163500BD8484 /* MainTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableViewCell.h; sourceTree = "<group>"; };
 		69F85B1C1D41163500BD8484 /* MainTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTableViewCell.m; sourceTree = "<group>"; };
 		69F85B1D1D41163500BD8484 /* MainTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainTableViewCell.xib; sourceTree = "<group>"; };
+		69FC4D361D4F6E290052D711 /* ShareActionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareActionView.h; sourceTree = "<group>"; };
+		69FC4D371D4F6E290052D711 /* ShareActionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareActionView.m; sourceTree = "<group>"; };
 		FB0C614D1D47A15400492FA2 /* MMDrawerBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerBarButtonItem.h; sourceTree = "<group>"; };
 		FB0C614E1D47A15400492FA2 /* MMDrawerBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerBarButtonItem.m; sourceTree = "<group>"; };
 		FB0C614F1D47A15400492FA2 /* MMDrawerController+Subclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MMDrawerController+Subclass.h"; sourceTree = "<group>"; };
@@ -348,6 +351,8 @@
 		FB52D7571D3EA52E009BDC84 /* Find */ = {
 			isa = PBXGroup;
 			children = (
+				69FC4D361D4F6E290052D711 /* ShareActionView.h */,
+				69FC4D371D4F6E290052D711 /* ShareActionView.m */,
 				FB0C614C1D47A15400492FA2 /* MMDrawerController */,
 				FB7489331D3EAC62003FDCB7 /* UUChart */,
 				FB7489281D3EAC56003FDCB7 /* AYPageControl */,
@@ -852,6 +857,7 @@
 				FB52D7561D3EA4D2009BDC84 /* ViewController.m in Sources */,
 				FB74893F1D3EAC62003FDCB7 /* UUChart.m in Sources */,
 				FB74894E1D3EAC9C003FDCB7 /* HearModel.m in Sources */,
+				69FC4D381D4F6E290052D711 /* ShareActionView.m in Sources */,
 				FB52D7B91D3EA52E009BDC84 /* MASLayoutConstraint.m in Sources */,
 				FB7489551D3EAD25003FDCB7 /* MEViewController.m in Sources */,
 				FB52D7B31D3EA52E009BDC84 /* UIProgressView+AFNetworking.m in Sources */,

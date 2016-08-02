@@ -159,9 +159,9 @@ int z =0;
 
 -(void)createTableView{
     
-    self.automaticallyAdjustsScrollViewInsets = NO;
+//    self.automaticallyAdjustsScrollViewInsets = NO;
     //PCH 预编译文件
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(290, 520, 120,200) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 110, [UIScreen mainScreen].bounds.size.height - 200, 120,200) style:UITableViewStylePlain];
     
     self.tableView.backgroundColor = [UIColor colorWithRed:(242/255.0f) green:(242/255.0f) blue:(242/255.0f) alpha:0];
    self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
@@ -171,7 +171,7 @@ int z =0;
     ////////////
     
     _label =[[UILabel alloc]init];
-    _label = [[UILabel alloc]initWithFrame:CGRectMake(310, 500, 100, 20)];
+    _label = [[UILabel alloc]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 90, [UIScreen mainScreen].bounds.size.height - 220, 120, 20)];
     long dd = (long)[_date timeIntervalSince1970];
     long fin=dd-z*86400;
     NSDate * datenow = [[NSDate alloc] initWithTimeIntervalSince1970:fin];

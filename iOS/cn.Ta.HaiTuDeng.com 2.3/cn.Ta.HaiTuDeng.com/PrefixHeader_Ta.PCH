@@ -32,7 +32,7 @@
 #import "AFNetworking.h"
 #import "AYPageControl.h"
 #import "MMDrawerController.h"//侧滑
-
+#import "ShareActionView.h"//弹出框
 #import "UIView+GetViewController.h"
 
 //引导页
