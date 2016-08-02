@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		69548B301D50DA8D00D44ACE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69548B2F1D50DA8D00D44ACE /* ViewController.m */; };
 		69F85B1A1D40DCB900BD8484 /* ChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69F85B191D40DCB900BD8484 /* ChartView.m */; };
 		69F85B1E1D41163500BD8484 /* MainTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69F85B1C1D41163500BD8484 /* MainTableViewCell.m */; };
 		69F85B1F1D41163500BD8484 /* MainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 69F85B1D1D41163500BD8484 /* MainTableViewCell.xib */; };
@@ -22,7 +23,6 @@
 		FB52D7311D3EA3EB009BDC84 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB52D72F1D3EA3EB009BDC84 /* LaunchScreen.storyboard */; };
 		FB52D73C1D3EA3EB009BDC84 /* cn_Ta_HaiTuDeng_comTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FB52D73B1D3EA3EB009BDC84 /* cn_Ta_HaiTuDeng_comTests.m */; };
 		FB52D7471D3EA3EB009BDC84 /* cn_Ta_HaiTuDeng_comUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = FB52D7461D3EA3EB009BDC84 /* cn_Ta_HaiTuDeng_comUITests.m */; };
-		FB52D7561D3EA4D2009BDC84 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB52D7551D3EA4D2009BDC84 /* ViewController.m */; };
 		FB52D7A41D3EA52E009BDC84 /* LDXNetWork.m in Sources */ = {isa = PBXBuildFile; fileRef = FB52D75B1D3EA52E009BDC84 /* LDXNetWork.m */; };
 		FB52D7A51D3EA52E009BDC84 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FB52D7611D3EA52E009BDC84 /* AFHTTPSessionManager.m */; };
 		FB52D7A61D3EA52E009BDC84 /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FB52D7641D3EA52E009BDC84 /* AFNetworkReachabilityManager.m */; };
@@ -94,6 +94,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		69548B2E1D50DA8D00D44ACE /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		69548B2F1D50DA8D00D44ACE /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		69F85B181D40DCB900BD8484 /* ChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChartView.h; sourceTree = "<group>"; };
 		69F85B191D40DCB900BD8484 /* ChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChartView.m; sourceTree = "<group>"; };
 		69F85B1B1D41163500BD8484 /* MainTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableViewCell.h; sourceTree = "<group>"; };
@@ -125,8 +127,6 @@
 		FB52D7421D3EA3EB009BDC84 /* cn.Ta.HaiTuDeng.comUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = cn.Ta.HaiTuDeng.comUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB52D7461D3EA3EB009BDC84 /* cn_Ta_HaiTuDeng_comUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = cn_Ta_HaiTuDeng_comUITests.m; sourceTree = "<group>"; };
 		FB52D7481D3EA3EB009BDC84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FB52D7541D3EA4D2009BDC84 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewController.h; path = ../../ViewController.h; sourceTree = "<group>"; };
-		FB52D7551D3EA4D2009BDC84 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ViewController.m; path = ../../ViewController.m; sourceTree = "<group>"; };
 		FB52D7581D3EA52E009BDC84 /* Define.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Define.h; sourceTree = "<group>"; };
 		FB52D75A1D3EA52E009BDC84 /* LDXNetWork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LDXNetWork.h; sourceTree = "<group>"; };
 		FB52D75B1D3EA52E009BDC84 /* LDXNetWork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LDXNetWork.m; sourceTree = "<group>"; };
@@ -628,8 +628,8 @@
 		FB52D7D41D3EA6BA009BDC84 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				FB52D7541D3EA4D2009BDC84 /* ViewController.h */,
-				FB52D7551D3EA4D2009BDC84 /* ViewController.m */,
+				69548B2E1D50DA8D00D44ACE /* ViewController.h */,
+				69548B2F1D50DA8D00D44ACE /* ViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -854,7 +854,6 @@
 				FB74893E1D3EAC62003FDCB7 /* UUBar.m in Sources */,
 				FB52D7B21D3EA52E009BDC84 /* UIImageView+AFNetworking.m in Sources */,
 				FB52D7A91D3EA52E009BDC84 /* AFURLResponseSerialization.m in Sources */,
-				FB52D7561D3EA4D2009BDC84 /* ViewController.m in Sources */,
 				FB74893F1D3EAC62003FDCB7 /* UUChart.m in Sources */,
 				FB74894E1D3EAC9C003FDCB7 /* HearModel.m in Sources */,
 				69FC4D381D4F6E290052D711 /* ShareActionView.m in Sources */,
@@ -880,6 +879,7 @@
 				FB52D7B61D3EA52E009BDC84 /* MASCompositeConstraint.m in Sources */,
 				FB52D7A51D3EA52E009BDC84 /* AFHTTPSessionManager.m in Sources */,
 				FB52D7B41D3EA52E009BDC84 /* UIRefreshControl+AFNetworking.m in Sources */,
+				69548B301D50DA8D00D44ACE /* ViewController.m in Sources */,
 				69F85B1E1D41163500BD8484 /* MainTableViewCell.m in Sources */,
 				FB52D7B51D3EA52E009BDC84 /* UIWebView+AFNetworking.m in Sources */,
 				FB52D7AA1D3EA52E009BDC84 /* AFURLSessionManager.m in Sources */,
