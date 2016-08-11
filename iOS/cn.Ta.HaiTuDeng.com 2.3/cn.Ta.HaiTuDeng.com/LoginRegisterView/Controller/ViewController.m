@@ -78,11 +78,15 @@
         
         if ([success isEqualToString:@"1"]) {
             [self showTheAlertView:self andAfterDissmiss:1.5 title:@"注册成功" message:@""];
-            [_longinR goToLoginView];
-        }
+            [_longinR goToLoginView];}
         else if([success isEqualToString:@"-1"]){
             [self showTheAlertView:self andAfterDissmiss:1.5 title:@"账号已经被注册了" message:@""];
         }
+        else
+        {
+            [self showTheAlertView:self andAfterDissmiss:1.5 title:@"服务器故障，请稍后再试" message:@""];
+        }
+        
     } error:^(NSError *error) {
         NSLog(@"错误的原因:%@",error);
     }];
