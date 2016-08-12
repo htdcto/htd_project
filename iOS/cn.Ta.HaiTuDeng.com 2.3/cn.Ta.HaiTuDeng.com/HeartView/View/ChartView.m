@@ -6,12 +6,15 @@
 //  Copyright © 2016年 zhangleishan. All rights reserved.
 //
 //一天的折线图
+//123
 
+//123
 
 
 #import "ChartView.h"
 #import "UUChart.h"
 #import "LDXNetWork.h"
+#import "ViewController.h"
 
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:0.8]
@@ -31,24 +34,18 @@
     UISwitch *switchs; //开关
     BOOL isShowValue;  //显示数值
     }
-@property(nonatomic,strong) NSMutableArray *arrayX;//自己的折线
+@property(nonatomic,strong) NSMutableArray *arrayX;//时间轴
 @property (nonatomic,strong)NSDate * date;//当前时间
-@property long timepoint;//30天之前秒数
-@property int key;//这里设置时间轴现实天数
-@property(nonatomic,strong) NSMutableArray * time ;
-@property(nonatomic,strong) NSMutableArray * timet ;
-@property(nonatomic,strong) NSMutableArray * longtime;
-@property(nonatomic,strong) NSMutableArray * longtimet;
-@property(nonatomic,strong) NSMutableArray * tadytime ;
+
 @end
 
 @implementation ChartView
 
--(instancetype)initWithFrame:(CGRect)frame
+-(instancetype)initWithFrame:(CGRect)frame :(NSArray *)weekCountForAll
 {
     if (self=[super initWithFrame:frame]) {
          }
-    [self setData];
+    [self setDate:weekCountForAll];
     return self;
     
 }
@@ -67,150 +64,27 @@
     [chartView removeFromSuperview];
     
     chartView = [[UUChart alloc]initwithUUChartDataFrame:CGRectMake(0, 0,self.frame.size.width, self.frame.size.height) withSource:self withStyle:UUChartLineStyle];
-    
 
     [chartView showInView:self];
     
     
     
 }
--(void)setData
+
+-(void)setDate:(NSArray *)weekCountForAll
 {
-    
-    
-    
-    
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *name = [userDefaults objectForKey:@"name"];
-    NSString *pathDocuments = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-
-    NSString *createPath3 = [NSString stringWithFormat:@"%@/%@/timeu.plist", pathDocuments,name];
-
-    NSDictionary *dicthsj9 = [NSDictionary dictionaryWithContentsOfFile:createPath3];
-    
-    _time =dicthsj9[@"time"];
-    _timet=dicthsj9[@"timet"];
-
-    
-    _date=[NSDate date];
-    _key =10;
-    
-    long  now = (long)[_date timeIntervalSince1970];
-    long trun=now/(24*60*60);
-    long trun1=trun-_key+1;
-    _timepoint=trun1*24*60*60;
-              _longtime =[[NSMutableArray alloc]init];
-    _longtimet =[[NSMutableArray alloc]init];
-    NSString *p = [[NSString alloc]init];
-     NSString *pt = [[NSString alloc]init];
-    
-    
-   _tadytime = [[NSMutableArray alloc]init];
-  for(int i=0;i<[_timet count];i++)
-    {
-        long  now = (long)[_date timeIntervalSince1970];
-        long trun=now/(24*60*60);
-        NSString * ls= [_timet objectAtIndex:i];
-        NSDateFormatter * formatter = [[NSDateFormatter alloc ] init];
-        [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
-        NSDate * sls =  [formatter dateFromString:ls];
-        long longls = (long)[sls timeIntervalSince1970];
-
-        if(trun==longls/(24*60*60))
-        {
-            NSDate * lst  =  [formatter dateFromString:ls];
-            NSDateFormatter * formatter = [[NSDateFormatter alloc ] init];
-            [formatter setDateFormat:@"HH:mm:ss"]; 
-            NSString * tt=[formatter stringFromDate:lst];
-          [_tadytime addObject: tt];
-        }
-        
-
-    }
-
-            for(int i=0;i<_key;i++)
-            {
-                int dmax=0;
-                int dmaxt=0;
-                for(int j=0;j<[_time count];j++)
-                {
-                    NSString * ls= [_time objectAtIndex:j];
-                    NSDateFormatter * formatter = [[NSDateFormatter alloc ] init];
-                    [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
-                    NSDate * sls =  [formatter dateFromString:ls];
-                    long longls = (long)[sls timeIntervalSince1970];
-                    
-                    if(longls/(24*60*60)==(_timepoint/(24*60*60))+i)
-                    {
-                        dmax ++;
-                    }
-                }
-                
-                
-                
-                
-                for(int j=0;j<[_timet count];j++)
-                {
-                    NSString * ls= [_timet objectAtIndex:j];
-                    NSDateFormatter * formatter = [[NSDateFormatter alloc ] init];
-                    [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
-                    NSDate * sls =  [formatter dateFromString:ls];
-                    long longls = (long)[sls timeIntervalSince1970];
-                    
-                    if(longls/(24*60*60)==(_timepoint/(24*60*60))+i)
-                    {
-                        dmaxt ++;
-                    }
-                }
-
-                
-               
-                p=[NSString stringWithFormat:@"%d",dmax];
-                pt=[NSString stringWithFormat:@"%d",dmaxt];
-                [_longtime addObject: p];
-                [_longtimet addObject: pt];
-            }
-          
-    
-    
-    
- 
-    self.arrayX=[NSMutableArray arrayWithObjects:@"0",nil];
-    
-    
-    long  kk = [_longtime count]-1;
-    
-    
-    for (long  i= kk ;i >=0;i--)
-    {
- 
-       long dd = (long)[_date timeIntervalSince1970];
-       long fin=dd-i*86400;
-       NSDate * datenow = [[NSDate alloc] initWithTimeIntervalSince1970:fin];
-       NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        //[dateFormatter setDateFormat:@"yy/MM/dd"];
-       [dateFormatter setDateFormat:@"MM-dd"];
-       NSString *strDate = [dateFormatter stringFromDate: datenow];
-       [_arrayX addObject:strDate];
-    }
-    
-   [_arrayX removeObjectAtIndex:0];//移除第一个元素
-    
-    
-    
-  //NSLog(@"shijiandian  %@",_tadytime);
-    
-    
-
-   NSArray *array1Y=_longtime;
+    NSMutableArray *array1Y=[[NSMutableArray alloc]init];
+    array1Y=weekCountForAll[0];
     if(array1Y==nil)
     {array1Y=[NSMutableArray arrayWithObjects:@0,nil];}
-    
-    NSArray *array2Y=_longtimet;
-    
+    NSMutableArray *array2Y=[[NSMutableArray alloc]init];
+    array2Y=weekCountForAll[1];
     if(array2Y==nil)
     {array2Y=[NSMutableArray arrayWithObjects:@0,nil];}
+    
+    _arrayX = weekCountForAll[2];
     //NSArray *array2Y= [NSArray arrayWithObjects:@"3",@"2",nil];;//取出纪录用户每日点击量数组max
+
     NSMutableArray *finalY=[NSMutableArray arrayWithCapacity:0];
     [finalY addObject:array1Y];
     [finalY addObject:array2Y];
@@ -221,10 +95,11 @@
     
     chartView = [[UUChart alloc]initwithUUChartDataFrame:CGRectMake(0, 0,self.frame.size.width, self.frame.size.height) withSource:self withStyle:UUChartLineStyle];//这里可调图的位置和大小
     chartView.backgroundColor =[UIColor colorWithRed:(242/255.0f) green:(242/255.0f) blue:(242/255.0f) alpha:0];
+
     [chartView showInView:self];
     
-    
 }
+
 
 
 

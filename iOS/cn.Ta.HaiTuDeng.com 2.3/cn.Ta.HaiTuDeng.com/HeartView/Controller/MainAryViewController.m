@@ -8,12 +8,12 @@
 
 
 #import "MainAryViewController.h"
+#import "DB.h"
 
 @interface MainAryViewController ()<UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate>
 
 @property(strong,nonatomic) ChartView *chartView;
 @property(nonatomic,strong) NSString* locationString;
-@property (nonatomic, strong) AYPageControlView *pageControlView;
 @property (nonatomic, strong) UIScrollView *bannerScrollView;
 @property (nonatomic,strong)NSString * filepath;//tamax.plist,装对方数据
 @property(nonatomic,strong) NSTimer* timer;// 定义倒计时实现定时器
@@ -22,9 +22,17 @@
 @property (nonatomic,strong)UILabel *label;//当日点击时间列表
 
 
+
+
 @end
+
 int i = 20;//计时器参数
 int z =0;
+
+int kk = 0;//具体时间key值
+int kkk = 0;//星期key值
+int week=0;
+int weekDaycount= 0;
 @implementation MainAryViewController
 
 #pragma mark - LifeCycle
@@ -72,11 +80,22 @@ int z =0;
 
 }
 - (void)viewDidLoad {
-    
-    [self TtelName];
+    //算出今天周几
+    NSDate * USDate=[NSDate date];
+    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    NSInteger weekday = [gregorianCalendar component:NSCalendarUnitWeekday fromDate:USDate]-1;
+    week = (int)weekday;
+    //算出今天周几
+    if(week==0)
+    {week=7;}
+    //[self TtelName];
     [super viewDidLoad];
-   
-    self.dataArray = [NSMutableArray array];//初始化数据源
+    
+    [self createTableView];
+    
+    [self loadChartView];
+    
+    [self loadData];
     
     self.view.backgroundColor = [UIColor colorWithRed:(242/255.0f) green:(242/255.0f) blue:(242/255.0f) alpha:1];
     
@@ -87,14 +106,13 @@ int z =0;
     NSString *pathDocuments = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     
     NSString *createPath = [NSString stringWithFormat:@"%@/%@", pathDocuments,name];
-    NSLog(@"%@",createPath);
     [fileManager createDirectoryAtPath:createPath withIntermediateDirectories:YES attributes:nil error:nil];
     _filepath = [createPath stringByAppendingPathComponent:@"timeu.plist"];
-    NSLog(@"%@",_filepath);
+    NSLog(@"单例存放到沙盒的路径：%@",_filepath);
     _date=[NSDate date];
     
     //****************我的背景图片********************
-    NSString *url = [NSString stringWithFormat:@"%@/%@.jpg", @"http://192.168.1.108/image/backimage", name];
+    NSString *url = [NSString stringWithFormat:@"%@/%@.jpg", @"http://192.168.1.106/image/backimage", name];
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
     UIImage *image = [UIImage imageWithData:data];
     _BJimge.userInteractionEnabled = YES;
@@ -106,37 +124,50 @@ int z =0;
     }
      //****************我的背景图片********************
     
-    
-    
-    
-    
-    
-    [self timedown];
-    [self uptime];
-    
-    
-    
   
-    
-   
-    
     //--------------------------------手势-------------------------------
   
         
    
 }
 
+-(void)loadData{
+    
+    [_tableView removeFromSuperview];
+    [_label removeFromSuperview];
+    
+    DB *db = [[DB alloc]init];
+    [db openOrCreateDB];
+   
+    NSArray *upTimestamp = [db upTimestamp:kk];
+    self.dataArray = upTimestamp[1];
+    self.dataString = upTimestamp[0];
+  
+    [self createTableView];
+    
+}
+-(void)loadChartView
+{
+    [self.chartView removeFromSuperview];
+    DB *db = [[DB alloc]init];
+    [db openOrCreateDB];
+    NSArray *weekCountForAll =[db caculateTheCountOfTimestampFromServer:kkk];
+    NSArray *fuck=weekCountForAll[0];
+    weekDaycount=(int)[fuck count];
+    [self scrollViewUI:weekCountForAll];
+    
+}
+/*
 -(void)TtelName
 {
-    
+ 
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSString *Uname = [userDefaults objectForKey:@"name"];
-    NSString *tname = [userDefaults objectForKey:@"Ttel"];
-    NSLog(@"这就是单例：%@",tname);
-    if (tname == NULL) {
-        NSDictionary *dic232319 = @{@"Utel":Uname};
+    NSString *Tname = [userDefaults objectForKey:@"Ttel"];
+    if (Tname == NULL) {
+        NSDictionary *dic = @{@"Utel":Uname};
         //网络请求
-               [LDXNetWork GetThePHPWithURL:GEINEME par:dic232319 success:^(id responseObject)
+               [LDXNetWork GetThePHPWithURL:GEINEME par:dic success:^(id responseObject)
          {
        
              if ([responseObject[@"success"]isEqualToString:@"1"]) {
@@ -152,35 +183,36 @@ int z =0;
              
          }];
     }
-    NSLog(@"这是不是单例:%@",tname);
+    NSLog(@"创建沙盒:包含%@,%@,自己的时间戳",Uname,Tname);
     
 }
+ */
 //----------------------------列表---------------------------------
 
 -(void)createTableView{
     
 //    self.automaticallyAdjustsScrollViewInsets = NO;
     //PCH 预编译文件
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 110, [UIScreen mainScreen].bounds.size.height - 200, 120,200) style:UITableViewStylePlain];
+    
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 110, [UIScreen mainScreen].bounds.size.height - 210, 110,200) style:UITableViewStylePlain];
     
     self.tableView.backgroundColor = [UIColor colorWithRed:(242/255.0f) green:(242/255.0f) blue:(242/255.0f) alpha:0];
    self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     _tableView.bounces = YES;
-    ////////////
+    
     
     _label =[[UILabel alloc]init];
-    _label = [[UILabel alloc]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 90, [UIScreen mainScreen].bounds.size.height - 220, 120, 20)];
-    long dd = (long)[_date timeIntervalSince1970];
-    long fin=dd-z*86400;
-    NSDate * datenow = [[NSDate alloc] initWithTimeIntervalSince1970:fin];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yy年MM月dd日"];
-    NSString *nDate = [dateFormatter stringFromDate: datenow];
-    _label.text = nDate;
+    _label = [[UILabel alloc]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width - 95, [UIScreen mainScreen].bounds.size.height - 230, 120, 20)];
+    
+    
+    
+    
+    _label.text = _dataString;
     _label.textColor = [UIColor redColor];
     _label.font = [UIFont boldSystemFontOfSize:13.0f];
+    NSLog(@"标题:%@",_label.text);
   
     [self.view addSubview:_label];
     //cell如果不能铺满tableView 是不能滑动的 只能由弹簧效果进行弹动
@@ -201,13 +233,14 @@ int z =0;
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     MainTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BASE"forIndexPath:indexPath];
-    //cell.backgroundColor = [UIColor redColor];
     cell.backgroundColor = [UIColor colorWithRed:(242/255.0f) green:(242/255.0f) blue:(242/255.0f) alpha:0];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (self.dataArray.count<=0) {
         return cell;
     }
+    
     cell.Time_Label.text = _dataArray[indexPath.row];
+    
    
      NSDateFormatter * formatter = [[NSDateFormatter alloc ] init];
      [formatter setDateFormat:@"HH:mm:ss"];
@@ -240,12 +273,21 @@ int z =0;
     UISwipeGestureRecognizer *swipe = sender;
     if (swipe.direction == UISwipeGestureRecognizerDirectionLeft)
     {
-        if(z==0)
+        if(kk==0)
         {}
         else
         {
-        z--;
-        [self uptime];
+        kk--;
+            if(kk+1 == (kkk-1)*weekDaycount+week)
+            {
+                kkk--;
+                [self loadChartView];
+                
+            }
+
+            
+            [self loadData];
+            
             
  
    
@@ -254,9 +296,16 @@ int z =0;
     }
     if (swipe.direction == UISwipeGestureRecognizerDirectionRight)
     {
-        z++;
-        [self uptime];
-     
+        kk++;
+        if(kk == kkk*weekDaycount+week )
+        {
+            kkk++;
+            
+            [self loadChartView];
+            
+        }
+        
+        [self loadData];
 
     }
     
@@ -373,25 +422,68 @@ int z =0;
         i=20;
         _timer  = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(runTime) userInfo:nil repeats:YES];
         _ClickBtn.userInteractionEnabled = NO;
-        [self timeup];
+       // [self timeup];
     }
 
 }
--(void)scrollViewUI
+-(void)scrollViewUI:(NSArray *)weekCountForAll
 {
     
-    
-      ChartView *chView = [[ChartView alloc]initWithFrame:CGRectMake(10, [UIScreen mainScreen].bounds.size.height - 220, self.view.frame.size.width-120, 220) ];
+    ChartView *chView = [[ChartView alloc]initWithFrame:CGRectMake(5, [UIScreen mainScreen].bounds.size.height - 230, [UIScreen mainScreen].bounds.size.width-110, 220) :weekCountForAll ];
     UIColor *color = [UIColor colorWithRed:(242/255.0f) green:(242/255.0f) blue:(242/255.0f) alpha:1];
     chView.backgroundColor = [color colorWithAlphaComponent:0];
     self.chartView = chView;
-   
-   
+    
     [self.view addSubview:self.chartView];
    
+    UISwipeGestureRecognizer *swipeGestureLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(ChartSwipe:)];
+    //设置轻扫的方向
+    swipeGestureLeft.direction = UISwipeGestureRecognizerDirectionLeft; //默认向右
+    [_chartView addGestureRecognizer:swipeGestureLeft];
+    
+    UISwipeGestureRecognizer *swipeGestureRinght = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(ChartSwipe:)];
+    //设置轻扫的方向
+    swipeGestureRinght.direction = UISwipeGestureRecognizerDirectionRight; //默认向右
+    [_chartView addGestureRecognizer:swipeGestureRinght];
+
    
     
 }
+-(void)ChartSwipe:(id)sender
+{
+    UISwipeGestureRecognizer *swipe = sender;
+    if (swipe.direction == UISwipeGestureRecognizerDirectionLeft)
+    {
+        if(kkk==0)
+        {}
+        else
+        {
+   
+            kkk--;
+        
+                kk = kkk*7+week-1;
+            
+            [self loadData];
+            [self loadChartView];
+            
+            
+            
+            
+        }
+        //向右轻扫
+    }
+    if (swipe.direction == UISwipeGestureRecognizerDirectionRight)
+    {
+        kkk++;
+      
+       kk = kkk*7+week-1;
+         [self loadData];
+        [self loadChartView];
+        
+    }
+    
+}
+/*
 -(void)timedown //下载时间戳数组并存到timeu里面
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -405,14 +497,14 @@ int z =0;
     long timepoint=trun1*24*60*60;
     NSDate * t  = [NSDate dateWithTimeIntervalSince1970:timepoint];
     
-    NSDictionary *dic232319 = @{@"Utel":Utel,@"time": t };
+    NSDictionary *dic232319 = @{@"Utel":Utel};
     //网络请求
     [LDXNetWork GetThePHPWithURL:SHUJUDOWN par:dic232319 success:^(id responseObject)
      {
          if ([responseObject[@"success"]isEqualToString:@"1"]) {
             
-             NSArray * time = responseObject[@"time"];
-             NSArray *  timet =responseObject[@"timet"];
+             NSArray * time = responseObject[@"Utime"];
+             NSArray * timet =responseObject[@"Ttime"];
                  //建立数据模型存储数据
              
              NSMutableDictionary *mDicth = [[NSMutableDictionary alloc] init];
@@ -431,7 +523,9 @@ int z =0;
          NSLog(@"登录失败的原因:%@",error);
      }];
 }
+ */
 //usuxwyyuxw
+/*
 -(void)uptime //刷新左侧具体时间表格子
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -490,6 +584,8 @@ int z =0;
      }];
 }
 //uwhsdiuwh
+/*
+ 
 -(void)timeup//上传当前时间戳
 {
     
@@ -515,7 +611,7 @@ int z =0;
     }];
     
 }
-
+*/
 -(void)runTime
 {
     NSString *h = [[NSString alloc]init];
@@ -568,6 +664,7 @@ int z =0;
     }
     
 }
+
 
 -(void)viewDidDisappear:(BOOL)animated
 {

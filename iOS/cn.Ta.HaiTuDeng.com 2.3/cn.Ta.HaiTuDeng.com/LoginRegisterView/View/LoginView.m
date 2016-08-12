@@ -8,8 +8,10 @@
 
 #import "LoginView.h"
 #import "Define.h"
+#import "EMSDK.h"
+#import "EMError.h"
 
-@interface LoginView ()
+@interface LoginView ()<EMClientDelegate>
 
 @property (nonatomic, strong) UIImageView *nameImageV;
 @property (nonatomic, strong) UIImageView *passImageV;
@@ -215,7 +217,6 @@
     [self.backImageView setImage:backImage];
 }
 
-
 #pragma mark - init方法
 // 防止外部调用init方法不走我们初始化控件
 - (instancetype)init
@@ -236,6 +237,7 @@
         [self nameTextF];
         [self passWordF];
         [self registerButton];
+
     }
     
     return self;
@@ -301,6 +303,7 @@
     }];
 }
 
+
 #pragma mark - ButtonAction
 - (void)loginButtonAction
 {
@@ -319,7 +322,7 @@
         return;
     }
     // 给外部调用的地方, 利用代理协议把登录信息传递到viewController代理人那里
-    [self.delegate getLoginName:_nameTextF.text pass:_passWordF.text];
+    [self.delegate Login:_nameTextF.text pass:_passWordF.text];
     
 }
 
@@ -345,6 +348,7 @@
     self.passWordF.text = self.regist.passTextF.text;
     [self.regist removeFromSuperview];
 }
+
 
 
 @end

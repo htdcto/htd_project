@@ -12,8 +12,8 @@
 
 @optional
 // 调用这个代理协议获取登录的用户名, 密码
-- (void)getLoginName:(NSString *)name
-                pass:(NSString *)pass;
+- (void)Login:(NSString *)name
+        pass:(NSString *)pass;
 
 // 调用这个代理协议获取注册用的一些信息
 - (void)getRegisterName:(NSString *)name
@@ -22,8 +22,8 @@
                   image:(UIImage *)image;
 
 @end
+//创建一个本地数据库的成员变量
 @interface LoginView : UIView
-
 @property (nonatomic, strong) UITextField *nameTextF;
 @property (nonatomic, strong) UITextField *passWordF;
 @property (nonatomic, strong) UIButton *loginButton;

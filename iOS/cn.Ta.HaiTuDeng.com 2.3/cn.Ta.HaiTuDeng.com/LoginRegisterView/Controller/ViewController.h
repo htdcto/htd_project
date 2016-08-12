@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface ViewController : UIViewController
+-(void)getLoginServer:(NSString *)name pass:(NSString *)pass;
+-(void)didReceiveMemoryWarning;
+-(void)didAutoLoginWithError;
 
 @end

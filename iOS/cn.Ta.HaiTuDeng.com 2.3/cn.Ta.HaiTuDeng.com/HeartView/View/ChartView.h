@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ChartView : UIView
+-(instancetype)initWithFrame:(CGRect)frame :(NSArray *)dataOfDate;
 
 @end

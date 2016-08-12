@@ -14,9 +14,9 @@
 #define xLabelMargin    15
 #define yLabelMargin    15
 #define UULabelHeightL    30
-#define UUYLabelwidth     40
-#define UUTagLabelwidth     80
-#define UUMaxNum 5
+#define UUYLabelwidth     10
+#define UUTagLabelwidth     40
+#define UUMaxNum 7
 
 @interface UULineChart : UIScrollView
 

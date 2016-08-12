@@ -7,6 +7,9 @@
 //
 
 #import "AppDelegate.h"
+#import "EMSDK.h"
+#import "EMError.h"
+#import "Helper.h"
 
 
 @interface AppDelegate ()
@@ -17,10 +20,20 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    //开始向环信注册企业和应用id
+    EMOptions *options = [EMOptions optionsWithAppkey:@"ta-htd#ta-htd"];
+    options.apnsCertName =@"nil";
+    [[EMClient sharedClient] initializeSDKWithOptions:options];
+    [Helper shareHelper];
+  //--------------------------xzl
+    
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    ViewController *VC = [[ViewController alloc]init];
+    self.window.rootViewController = VC;
     //判断是否第一次启动
+    /*
     if(![[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"])
     {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstLaunch"];
@@ -53,6 +66,7 @@
         }
 
     }
+     */
 
     return YES;
 }
@@ -62,12 +76,22 @@
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }
 
+//APP进入后台
 - (void)applicationDidEnterBackground:(UIApplication *)application {
+    [[EMClient sharedClient] applicationDidEnterBackground:application];
+//--------------------------xzl
+    
+    
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
+//APP将要从后台反回
 - (void)applicationWillEnterForeground:(UIApplication *)application {
+    [[EMClient sharedClient] applicationWillEnterForeground:application];
+//--------------------------xzl
+    
+    
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 

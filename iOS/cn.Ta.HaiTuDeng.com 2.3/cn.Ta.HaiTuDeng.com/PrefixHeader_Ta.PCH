@@ -7,26 +7,40 @@
 //
 
 #ifndef PrefixHeader_Ta_PCH
+/*定义数据库宏
+ **数据库名
+ **数据库时间表里面的时间戳
+ */
+#define DBNAME @"Ta.sqlite"
+
 #define PrefixHeader_Ta_PCH
 #define totalPages 1
 //登录
-#define LOGIN @"http://192.168.1.108/ta/login.php"
+#define LOGIN @"http://192.168.1.106/ta/login.php"
 //注册
-#define REGISTER @"http://192.168.1.108/ta/register.php"
+#define REGISTER @"http://192.168.1.106/ta/register.php"
 //上传
-#define SHUJUUP @"http://192.168.1.108/ta/timeup.php"
+#define SHUJUUP @"http://192.168.1.106/ta/timeup.php"
 //下载
-#define SHUJUDOWN @"http://192.168.1.108/ta/timedown.php"
+#define SHUJUDOWN @"http://192.168.1.106/ta/timedown.php"
 //上传背景图片
-#define BACKIMAGE @"http://192.168.1.108/ta/backimageup.php"
+#define BACKIMAGE @"http://192.168.1.106/ta/backimageup.php"
 
 //上传状态
-#define STATUS  @"http://192.168.1.108/ta/ingimageup.php"
+#define STATUS  @"http://192.168.1.106/ta/ingimageup.php"
+//下载状态
+#define STATUSEDOWN @"http://192.168.1.106/ta/ingimagedown.php"
 
 //获取对方用户名
-#define GEINEME  @"http://192.168.1.108/ta/getTtel.php"
+#define GEINEME  @"http://192.168.1.106/ta/getTtel.php"
 //删除对方状态
-#define DELETEIMAGE  @"http://192.168.1.108/ta/ingimagedelete.php"
+#define DELETEIMAGE  @"http://192.168.1.106/ta/ingimagedelete.php"
+
+//请求绑定
+#define BINDCHECK @"http://192.168.1.106/ta/bindcheck.php"
+
+//确定绑定
+#define YESBD @"http://192.168.1.106/ta/bind.php"
 //第三方库的pch
 #import "Define.h"
 #import "AFNetworking.h"
@@ -35,12 +49,16 @@
 #import "ShareActionView.h"//弹出框
 #import "UIView+GetViewController.h"
 
+//IM框架
+#import "EMError.h"
+#import "EMSDK.h"
+
 //引导页
 #import "UserGuideViewController.h"
 
 //登录界面
 #import "ViewController.h"
-
+#import "BDViewController.h"
 
 #import "MainAryViewController.h"//心界面
 #import "StatusViewController.h"//状态界面

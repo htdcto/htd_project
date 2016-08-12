@@ -11,6 +11,8 @@
 #import "StatusViewController.h"
 #import "MainAryViewController.h"
 #import "ViewController.h"
+#import "EMError.h"
+#import "EMSDK.h"
 
 @interface MEViewController ()
 
@@ -29,6 +31,10 @@
 }
  - (IBAction)tuchu:(id)sender {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+     EMError *error = [[EMClient sharedClient] logout:YES];
+     if (!error) {
+         NSLog(@"退出成功");
+     }
     //移除UserDefaults中存储的用户信息
     [userDefaults removeObjectForKey:@"name"];
     [userDefaults removeObjectForKey:@"password"];
@@ -39,6 +45,12 @@
     
     [self presentViewController:VC animated:YES completion:nil];
 }
+
+- (void)didRemovedFromServer
+{
+    NSLog(@"111");
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

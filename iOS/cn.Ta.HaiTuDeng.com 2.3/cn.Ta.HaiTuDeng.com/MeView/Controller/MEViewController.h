@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface MEViewController : UIViewController
-
+- (void)didRemovedFromServer;
 @end

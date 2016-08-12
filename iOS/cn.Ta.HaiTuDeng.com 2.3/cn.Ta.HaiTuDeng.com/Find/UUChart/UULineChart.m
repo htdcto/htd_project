@@ -31,16 +31,13 @@
 {
     _yValues = yValues;
     NSArray * ary = _yValues[0];
-    if(ary.count <= UUMaxNum)
-    {
+    
         _xLabelWidth = (self.frame.size.width - UUYLabelwidth)/ary.count;
-    }else{
-        
-        _xLabelWidth = (self.frame.size.width - UUYLabelwidth)/UUMaxNum;
-    }
+    
     _contentScroll = CGSizeMake(_xLabelWidth * ary.count + UUYLabelwidth, self.frame.size.height);
     self.contentSize = CGSizeMake(_contentScroll.width + 10,_contentScroll.height);
     [self setYLabels:yValues];
+    self.scrollEnabled = NO;
 }
 
 -(void)setYLabels:(NSArray *)yLabels
@@ -122,7 +119,7 @@
     }else{
         num = UUMaxNum;
     }
-    _xLabelWidth = (self.frame.size.width - UUYLabelwidth)/UUMaxNum;
+    _xLabelWidth = ([UIScreen mainScreen].bounds.size.width-120)/UUMaxNum;
     
 
     for (int i=0; i<xLabels.count; i++) {
