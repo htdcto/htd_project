@@ -82,7 +82,7 @@
                         _alreadyBind = YES;
                         
                         
-                        DB *db = [[DB alloc]init];
+                        DB *db = [DB shareInit];
                         [db openOrCreateDB];
                         [db updateDBAfterLoginSuccess:name];
                         MainAryViewController *mainVC = [[MainAryViewController alloc]init];
@@ -119,6 +119,35 @@
 //先检测IM框架是否登录，如果登录成功返回1作服务器端登录，否则返回0报错。----------------------------------xzl
 -(void)Login:(NSString *)name pass:(NSString *)pass
 {
+    //自动登录
+    NSString *userAccount = [[NSUserDefaults standardUserDefaults] objectForKey:@"name"];
+    NSString *userPassword = [[NSUserDefaults standardUserDefaults] objectForKey:@"password"];
+    if (userAccount && userPassword) {
+        //存在用户名跟密码，实现自动登录
+        int i =0;
+        i = [self getLoginIM:name pass:pass];
+        NSLog(@"%d",i);
+        switch (i) {
+            case (0):
+                break;
+                
+            case(1):
+            {
+                [self getLoginServer:name pass:pass];
+            }
+                break;
+        }
+        
+        return;
+    }
+    
+    if ([name isEqualToString:@""] || [pass isEqualToString:@""]) {
+        
+        [self showTheAlertView:self andAfterDissmiss:1.0 title:@"请输入帐号跟密码" message:@""];
+        return;
+    }
+    
+
     int i =0;
     i = [self getLoginIM:name pass:pass];
     NSLog(@"%d",i);

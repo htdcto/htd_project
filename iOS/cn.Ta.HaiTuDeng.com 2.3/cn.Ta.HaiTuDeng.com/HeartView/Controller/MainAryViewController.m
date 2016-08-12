@@ -41,17 +41,17 @@ int weekDaycount= 0;
 
     [super viewWillAppear:animated];
     //-------------------------------手势-----------------------------------
-    [_timer setFireDate:[NSDate distantPast]];
-    i=20;
-    
+//    [_timer setFireDate:[NSDate distantPast]];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
 
     [super viewDidAppear:animated];
-   
-    
-
+    //允许点击剩余时长获取。
+    //    i=20;
+    if (!_timer) {
+        _timer = [NSTimer timerWithTimeInterval:1.0 target:self selector:@selector(runTime) userInfo:nil repeats:YES];
+    }
 }
 - (void)viewDidLoad {
     //算出今天周几
@@ -624,6 +624,15 @@ int weekDaycount= 0;
 */
 -(void)runTime
 {
+    if (i<=0) {
+        
+        [_timer invalidate];
+        _timer = nil;
+        _CountDown.text = @"";
+        //        [_timer setFireDate:[NSDate distantFuture]];//停止计时器
+        _ClickBtn.userInteractionEnabled = YES;//打开按钮
+        return;
+    }
     NSString *h = [[NSString alloc]init];
     NSString *m = [[NSString alloc]init];
     NSString *s = [[NSString alloc]init];
@@ -668,19 +677,14 @@ int weekDaycount= 0;
     NSLog(@"%@",_CountDown.text);
     NSString *labletime=[NSString stringWithFormat:@"%@:%@:%@",h,m,s];
     _CountDown.text = labletime;
-    if (i<=0) {
-        [_timer setFireDate:[NSDate distantFuture]];//停止计时器
-        _ClickBtn.userInteractionEnabled = YES;//打开按钮
-    }
-    
 }
 
 
 -(void)viewDidDisappear:(BOOL)animated
 {
    
-    [_timer setFireDate:[NSDate distantFuture]];
-    i=20;
+//    [_timer setFireDate:[NSDate distantFuture]];
+//    i=20;
 }
 
 - (void)didReceiveMemoryWarning {
