@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MainTableViewCell.h"
 
+//首页
 @interface MainAryViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UILabel *CountDown;// 倒计时
 @property (weak, nonatomic) IBOutlet UIButton *ClickBtn;//点击按钮

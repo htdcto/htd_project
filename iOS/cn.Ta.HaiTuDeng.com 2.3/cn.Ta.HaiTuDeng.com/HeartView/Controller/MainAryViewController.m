@@ -49,33 +49,7 @@ int weekDaycount= 0;
 - (void)viewDidAppear:(BOOL)animated{
 
     [super viewDidAppear:animated];
-    CGFloat kWindowsWidth = [[UIScreen mainScreen] bounds].size.width;
-    _swipeView = [[UIView alloc]initWithFrame:CGRectMake(kWindowsWidth-90, 20, 90, 90) ];
-    
-    _swipeView.backgroundColor = [UIColor colorWithRed:(242/255.0f) green:(242/255.0f) blue:(242/255.0f) alpha:0.5];
-    _swipeView.layer.cornerRadius=45;
-    _swipeView.layer.masksToBounds=YES;
-    _swipeView.layer.borderWidth=5;
-    _swipeView.layer.borderColor=[[UIColor colorWithRed:0.52 green:0.09 blue:0.07 alpha:0.5]CGColor];
-    [[[UIApplication sharedApplication]keyWindow] addSubview:_swipeView];
-    [[[UIApplication sharedApplication]keyWindow] bringSubviewToFront:_swipeView];
-    //添加轻扫手势
-    UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGesture:)];
-    //设置轻扫的方向
-    swipeGesture.direction = UISwipeGestureRecognizerDirectionRight; //默认向右
-    [_swipeView addGestureRecognizer:swipeGesture];
-    
-    //添加轻扫手势
-    UISwipeGestureRecognizer *swipeGestureUp = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGesture:)];
-    //设置轻扫的方向
-    swipeGestureUp.direction = UISwipeGestureRecognizerDirectionUp; //默认向上
-    [_swipeView addGestureRecognizer:swipeGestureUp];
-    
-    //添加轻扫手势
-    UISwipeGestureRecognizer *swipeGestureDown = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGesture:)];
-    //设置轻扫的方向
-    swipeGestureDown.direction = UISwipeGestureRecognizerDirectionDown; //默认向下
-    [_swipeView addGestureRecognizer:swipeGestureDown];
+   
     
 
 }
@@ -128,7 +102,40 @@ int weekDaycount= 0;
     //--------------------------------手势-------------------------------
   
         
-   
+    CGFloat kWindowsWidth = [[UIScreen mainScreen] bounds].size.width;
+    _swipeView = [[UIView alloc]initWithFrame:CGRectMake(kWindowsWidth-90, 20, 90 , 90) ];
+    
+    _swipeView.backgroundColor = [UIColor colorWithRed:(242/255.0f) green:(242/255.0f) blue:(242/255.0f) alpha:0.5];
+    _swipeView.layer.cornerRadius=45;
+    _swipeView.layer.masksToBounds=YES;
+    _swipeView.layer.borderWidth=5;
+    _swipeView.layer.borderColor=[[UIColor colorWithRed:0.52 green:0.09 blue:0.07 alpha:0.5]CGColor];
+    _swipeView.userInteractionEnabled = YES;
+    [[[UIApplication sharedApplication]keyWindow] addSubview:_swipeView];
+    [[[UIApplication sharedApplication]keyWindow] bringSubviewToFront:_swipeView];
+    //添加轻扫手势
+    UISwipeGestureRecognizer *swipeGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGesture:)];
+    //设置轻扫的方向
+    swipeGesture.direction = UISwipeGestureRecognizerDirectionRight; //默认向右
+    [_swipeView addGestureRecognizer:swipeGesture];
+    
+    //添加轻扫手势
+    UISwipeGestureRecognizer *swipeGestureUp = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGesture:)];
+    //设置轻扫的方向
+    swipeGestureUp.direction = UISwipeGestureRecognizerDirectionUp; //默认向上
+    [_swipeView addGestureRecognizer:swipeGestureUp];
+    
+    //添加轻扫手势
+    UISwipeGestureRecognizer *swipeGestureDown = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGesture:)];
+    //设置轻扫的方向
+    swipeGestureDown.direction = UISwipeGestureRecognizerDirectionDown; //默认向下
+    [_swipeView addGestureRecognizer:swipeGestureDown];
+    
+    //添加轻扫手势
+    UISwipeGestureRecognizer *swipeGestureLeft = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeGesture:)];
+    //设置轻扫的方向
+    swipeGestureDown.direction = UISwipeGestureRecognizerDirectionLeft; //默认向左
+    [_swipeView addGestureRecognizer:swipeGestureLeft];
 }
 
 -(void)loadData{
@@ -146,6 +153,7 @@ int weekDaycount= 0;
     [self createTableView];
     
 }
+
 -(void)loadChartView
 {
     [self.chartView removeFromSuperview];
@@ -358,42 +366,44 @@ int weekDaycount= 0;
         [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
     }
     UISwipeGestureRecognizer *swipe = sender;
-    if (swipe.direction == UISwipeGestureRecognizerDirectionRight)
-    {
-        StatusViewController  *ZTVC = [[StatusViewController alloc]init];
-        CATransition *animation = [CATransition animation];
-        animation.timingFunction = UIViewAnimationCurveEaseInOut;
-        animation.type = kCATransitionMoveIn;
-        animation.subtype = kCATransitionFromLeft;
-        [self.view.window.layer addAnimation:animation forKey:nil];
-        
-        [self presentViewController:ZTVC animated:NO completion:nil];
-        
-        //向右轻扫
-    }
-    
-
-    if (swipe.direction == UISwipeGestureRecognizerDirectionUp)
-    {
-        MEViewController *MEVC = [[MEViewController alloc]init];
-        CATransition *animation = [CATransition animation];
-        animation.timingFunction = UIViewAnimationCurveEaseInOut;
-        animation.type = kCATransitionMoveIn;
-        animation.subtype = kCATransitionFromTop;
-        [self.view.window.layer addAnimation:animation forKey:nil];
-        [self presentViewController:MEVC animated:NO completion:nil];
-        //向上轻扫
-    }
-    if (swipe.direction == UISwipeGestureRecognizerDirectionDown)
-    {
-        InformationViewController *HOVC = [[InformationViewController alloc]init];
-        CATransition *animation = [CATransition animation];
-        animation.timingFunction = UIViewAnimationCurveEaseInOut;
-        animation.type = kCATransitionMoveIn;
-        animation.subtype = kCATransitionFromBottom;
-        [self.view.window.layer addAnimation:animation forKey:nil];
-        [self presentViewController:HOVC animated:YES completion:nil];
-        //向下轻扫
+    switch (swipe.direction) {
+        case UISwipeGestureRecognizerDirectionUp:
+        {
+            MEViewController *MEVC = [[MEViewController alloc]init];
+            [self presentViewController:MEVC animated:NO completion:^{
+                
+                [[[UIApplication sharedApplication]keyWindow] bringSubviewToFront:_swipeView];
+            }];
+        }
+            break;
+        case UISwipeGestureRecognizerDirectionLeft:
+        {
+            if (self.presentedViewController != nil) {
+                [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
+            }
+        }
+            break;
+        case UISwipeGestureRecognizerDirectionDown:
+        {
+            InformationViewController *HOVC = [[InformationViewController alloc]init];
+            [self presentViewController:HOVC animated:NO completion:^{
+                
+                [[[UIApplication sharedApplication]keyWindow] bringSubviewToFront:_swipeView];
+            }];
+        }
+            break;
+        case UISwipeGestureRecognizerDirectionRight:
+        {
+            StatusViewController  *ZTVC = [[StatusViewController alloc]init];
+            
+            [self presentViewController:ZTVC animated:NO completion:^{
+                
+                [[[UIApplication sharedApplication]keyWindow] bringSubviewToFront:_swipeView];
+            }];
+        }
+            break;
+        default:
+            break;
     }
 }
 
