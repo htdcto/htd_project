@@ -136,7 +136,7 @@ int weekDaycount= 0;
     [_tableView removeFromSuperview];
     [_label removeFromSuperview];
     
-    DB *db = [[DB alloc]init];
+    DB *db = [DB shareInit];
     [db openOrCreateDB];
    
     NSArray *upTimestamp = [db upTimestamp:kk];

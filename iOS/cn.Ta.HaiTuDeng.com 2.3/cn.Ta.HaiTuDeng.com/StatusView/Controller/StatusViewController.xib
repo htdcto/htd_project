@@ -15,11 +15,17 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5me-jj-SyV">
-                    <rect key="frame" x="0.0" y="3" width="375" height="664"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5me-jj-SyV">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                 </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="5me-jj-SyV" secondAttribute="trailing" id="4tS-cU-UCQ"/>
+                <constraint firstItem="5me-jj-SyV" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="E4n-y5-8ug"/>
+                <constraint firstItem="5me-jj-SyV" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="hQw-DB-TgI"/>
+                <constraint firstAttribute="bottom" secondItem="5me-jj-SyV" secondAttribute="bottom" id="u1l-3i-W1B"/>
+            </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
         </view>
     </objects>

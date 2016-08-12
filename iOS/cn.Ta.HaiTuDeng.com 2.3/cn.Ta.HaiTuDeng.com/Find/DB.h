@@ -13,6 +13,7 @@
 {
     sqlite3 *db;
 }
++(instancetype)shareInit;
 -(void)openOrCreateDB;
 -(void)updateDBAfterLoginSuccess:(NSString *)Uname;
 -(void)execSql:(NSString *)sql;

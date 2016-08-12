@@ -10,6 +10,6 @@
 
 @interface StatusViewController : UIViewController
 @property (strong, nonatomic) IBOutlet UIImageView *BJImage;
-@property (strong, nonatomic) IBOutlet UIButton *backBtn;
+
 
 @end

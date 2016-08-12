@@ -14,6 +14,16 @@
 @implementation DB
 
 
++(instancetype)shareInit
+{
+    static dispatch_once_t onceToken;
+    static DB *_db = nil;
+    dispatch_once(&onceToken, ^{
+        _db = [[DB alloc]init];
+    });
+    return _db;
+}
+
 -(void)updateDBAfterLoginSuccess:(NSString *)Uname{
     sqlite3_stmt *tdbps;
     sqlite3_stmt *udbps;

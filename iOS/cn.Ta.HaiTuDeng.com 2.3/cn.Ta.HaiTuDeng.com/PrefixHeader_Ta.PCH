@@ -68,7 +68,7 @@
 #import "AppDelegate.h"
 
 // 小视图
-
+#import "UPImageViewController.h"//上传状态界面
 //折线图
 #import "ChartView.h"
 

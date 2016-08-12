@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		69548B301D50DA8D00D44ACE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69548B2F1D50DA8D00D44ACE /* ViewController.m */; };
+		695B4F831D5DA586009FF359 /* StatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 695B4F811D5DA586009FF359 /* StatusViewController.m */; };
+		695B4F841D5DA586009FF359 /* StatusViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 695B4F821D5DA586009FF359 /* StatusViewController.xib */; };
+		695B4F871D5DA5BE009FF359 /* ShareActionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 695B4F861D5DA5BE009FF359 /* ShareActionView.m */; };
+		695B4F8B1D5DA5CD009FF359 /* UPImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 695B4F891D5DA5CD009FF359 /* UPImageViewController.m */; };
+		695B4F8C1D5DA5CD009FF359 /* UPImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 695B4F8A1D5DA5CD009FF359 /* UPImageViewController.xib */; };
 		699841A81D51E839009FD865 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 699841A41D51E839009FD865 /* libcrypto.a */; };
 		699841A91D51E839009FD865 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 699841A51D51E839009FD865 /* libcurl.a */; };
 		699841AA1D51E839009FD865 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 699841A61D51E839009FD865 /* libssl.a */; };
@@ -22,14 +27,12 @@
 		699841BB1D51E8F6009FD865 /* libstdc++.6.0.9.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 699841BA1D51E8F6009FD865 /* libstdc++.6.0.9.tbd */; };
 		699841BD1D51E906009FD865 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 699841BC1D51E905009FD865 /* libsqlite3.tbd */; };
 		69DCDCD71D59DF24004DADB9 /* DB.m in Sources */ = {isa = PBXBuildFile; fileRef = 69DCDCD61D59DF24004DADB9 /* DB.m */; };
-		69EEFFFE1D547E5200E71B46 /* StatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69EEFFFD1D547E5200E71B46 /* StatusViewController.m */; };
 		69F8434C1D53606A007B849A /* BDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69F8434A1D53606A007B849A /* BDViewController.m */; };
 		69F8434D1D53606A007B849A /* BDViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 69F8434B1D53606A007B849A /* BDViewController.xib */; };
 		69F843501D538B09007B849A /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 69F8434F1D538B09007B849A /* Helper.m */; };
 		69F85B1A1D40DCB900BD8484 /* ChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69F85B191D40DCB900BD8484 /* ChartView.m */; };
 		69F85B1E1D41163500BD8484 /* MainTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69F85B1C1D41163500BD8484 /* MainTableViewCell.m */; };
 		69F85B1F1D41163500BD8484 /* MainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 69F85B1D1D41163500BD8484 /* MainTableViewCell.xib */; };
-		69FC4D381D4F6E290052D711 /* ShareActionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69FC4D371D4F6E290052D711 /* ShareActionView.m */; };
 		FB0C61561D47A15400492FA2 /* MMDrawerBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FB0C614E1D47A15400492FA2 /* MMDrawerBarButtonItem.m */; };
 		FB0C61571D47A15400492FA2 /* MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB0C61511D47A15400492FA2 /* MMDrawerController.m */; };
 		FB0C61581D47A15400492FA2 /* MMDrawerVisualState.m in Sources */ = {isa = PBXBuildFile; fileRef = FB0C61531D47A15400492FA2 /* MMDrawerVisualState.m */; };
@@ -88,7 +91,6 @@
 		FB7489511D3EACD8003FDCB7 /* InformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB7489501D3EACD8003FDCB7 /* InformationViewController.m */; };
 		FB7489551D3EAD25003FDCB7 /* MEViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB7489531D3EAD25003FDCB7 /* MEViewController.m */; };
 		FB7489561D3EAD25003FDCB7 /* MEViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB7489541D3EAD25003FDCB7 /* MEViewController.xib */; };
-		FB74895B1D3EAD68003FDCB7 /* StatusViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB7489591D3EAD68003FDCB7 /* StatusViewController.xib */; };
 		FB74895E1D3EC7B2003FDCB7 /* InformationViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FB74895D1D3EC7B2003FDCB7 /* InformationViewModel.m */; };
 		FB8B632B1D4B2DBF005BAE1A /* XFWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = FB8B632A1D4B2DBF005BAE1A /* XFWindow.m */; };
 /* End PBXBuildFile section */
@@ -113,6 +115,14 @@
 /* Begin PBXFileReference section */
 		69548B2E1D50DA8D00D44ACE /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		69548B2F1D50DA8D00D44ACE /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		695B4F801D5DA586009FF359 /* StatusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusViewController.h; sourceTree = "<group>"; };
+		695B4F811D5DA586009FF359 /* StatusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusViewController.m; sourceTree = "<group>"; };
+		695B4F821D5DA586009FF359 /* StatusViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatusViewController.xib; sourceTree = "<group>"; };
+		695B4F851D5DA5BE009FF359 /* ShareActionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareActionView.h; sourceTree = "<group>"; };
+		695B4F861D5DA5BE009FF359 /* ShareActionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareActionView.m; sourceTree = "<group>"; };
+		695B4F881D5DA5CD009FF359 /* UPImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UPImageViewController.h; sourceTree = "<group>"; };
+		695B4F891D5DA5CD009FF359 /* UPImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UPImageViewController.m; sourceTree = "<group>"; };
+		695B4F8A1D5DA5CD009FF359 /* UPImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UPImageViewController.xib; sourceTree = "<group>"; };
 		6998417C1D51E839009FD865 /* EMCallLocalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMCallLocalView.h; sourceTree = "<group>"; };
 		6998417D1D51E839009FD865 /* EMCallManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMCallManagerDelegate.h; sourceTree = "<group>"; };
 		6998417E1D51E839009FD865 /* EMCallRemoteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMCallRemoteView.h; sourceTree = "<group>"; };
@@ -166,7 +176,6 @@
 		699841BC1D51E905009FD865 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		69DCDCD51D59DF24004DADB9 /* DB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DB.h; path = Find/DB.h; sourceTree = "<group>"; };
 		69DCDCD61D59DF24004DADB9 /* DB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DB.m; path = Find/DB.m; sourceTree = "<group>"; };
-		69EEFFFD1D547E5200E71B46 /* StatusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusViewController.m; sourceTree = "<group>"; };
 		69F843491D53606A007B849A /* BDViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BDViewController.h; path = ../Controller/BDViewController.h; sourceTree = "<group>"; };
 		69F8434A1D53606A007B849A /* BDViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BDViewController.m; path = ../Controller/BDViewController.m; sourceTree = "<group>"; };
 		69F8434B1D53606A007B849A /* BDViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BDViewController.xib; path = ../Controller/BDViewController.xib; sourceTree = "<group>"; };
@@ -177,8 +186,6 @@
 		69F85B1B1D41163500BD8484 /* MainTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableViewCell.h; sourceTree = "<group>"; };
 		69F85B1C1D41163500BD8484 /* MainTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTableViewCell.m; sourceTree = "<group>"; };
 		69F85B1D1D41163500BD8484 /* MainTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainTableViewCell.xib; sourceTree = "<group>"; };
-		69FC4D361D4F6E290052D711 /* ShareActionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareActionView.h; sourceTree = "<group>"; };
-		69FC4D371D4F6E290052D711 /* ShareActionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareActionView.m; sourceTree = "<group>"; };
 		FB0C614D1D47A15400492FA2 /* MMDrawerBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerBarButtonItem.h; sourceTree = "<group>"; };
 		FB0C614E1D47A15400492FA2 /* MMDrawerBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerBarButtonItem.m; sourceTree = "<group>"; };
 		FB0C614F1D47A15400492FA2 /* MMDrawerController+Subclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MMDrawerController+Subclass.h"; sourceTree = "<group>"; };
@@ -305,8 +312,6 @@
 		FB7489521D3EAD25003FDCB7 /* MEViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEViewController.h; sourceTree = "<group>"; };
 		FB7489531D3EAD25003FDCB7 /* MEViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEViewController.m; sourceTree = "<group>"; };
 		FB7489541D3EAD25003FDCB7 /* MEViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MEViewController.xib; sourceTree = "<group>"; };
-		FB7489571D3EAD68003FDCB7 /* StatusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusViewController.h; sourceTree = "<group>"; };
-		FB7489591D3EAD68003FDCB7 /* StatusViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatusViewController.xib; sourceTree = "<group>"; };
 		FB74895C1D3EC7B2003FDCB7 /* InformationViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InformationViewModel.h; sourceTree = "<group>"; };
 		FB74895D1D3EC7B2003FDCB7 /* InformationViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InformationViewModel.m; sourceTree = "<group>"; };
 		FB8B63291D4B2DBF005BAE1A /* XFWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XFWindow.h; sourceTree = "<group>"; };
@@ -526,8 +531,6 @@
 		FB52D7571D3EA52E009BDC84 /* Find */ = {
 			isa = PBXGroup;
 			children = (
-				69FC4D361D4F6E290052D711 /* ShareActionView.h */,
-				69FC4D371D4F6E290052D711 /* ShareActionView.m */,
 				FB0C614C1D47A15400492FA2 /* MMDrawerController */,
 				FB7489331D3EAC62003FDCB7 /* UUChart */,
 				FB7489281D3EAC56003FDCB7 /* AYPageControl */,
@@ -773,6 +776,11 @@
 		FB52D7D01D3EA684009BDC84 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				695B4F881D5DA5CD009FF359 /* UPImageViewController.h */,
+				695B4F891D5DA5CD009FF359 /* UPImageViewController.m */,
+				695B4F8A1D5DA5CD009FF359 /* UPImageViewController.xib */,
+				695B4F851D5DA5BE009FF359 /* ShareActionView.h */,
+				695B4F861D5DA5BE009FF359 /* ShareActionView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -824,9 +832,9 @@
 		FB52D7D61D3EA6C6009BDC84 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				69EEFFFD1D547E5200E71B46 /* StatusViewController.m */,
-				FB7489571D3EAD68003FDCB7 /* StatusViewController.h */,
-				FB7489591D3EAD68003FDCB7 /* StatusViewController.xib */,
+				695B4F801D5DA586009FF359 /* StatusViewController.h */,
+				695B4F811D5DA586009FF359 /* StatusViewController.m */,
+				695B4F821D5DA586009FF359 /* StatusViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -997,10 +1005,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				695B4F841D5DA586009FF359 /* StatusViewController.xib in Resources */,
 				FB7489561D3EAD25003FDCB7 /* MEViewController.xib in Resources */,
-				FB74895B1D3EAD68003FDCB7 /* StatusViewController.xib in Resources */,
 				69F8434D1D53606A007B849A /* BDViewController.xib in Resources */,
 				FB52D7E81D3EA9DC009BDC84 /* MainAryViewController.xib in Resources */,
+				695B4F8C1D5DA5CD009FF359 /* UPImageViewController.xib in Resources */,
 				FB52D7311D3EA3EB009BDC84 /* LaunchScreen.storyboard in Resources */,
 				FB52D72E1D3EA3EB009BDC84 /* Assets.xcassets in Resources */,
 				FB52D7AB1D3EA52E009BDC84 /* LICENSE in Resources */,
@@ -1033,15 +1042,15 @@
 				FB52D7A71D3EA52E009BDC84 /* AFSecurityPolicy.m in Sources */,
 				FB74893E1D3EAC62003FDCB7 /* UUBar.m in Sources */,
 				FB52D7B21D3EA52E009BDC84 /* UIImageView+AFNetworking.m in Sources */,
-				69EEFFFE1D547E5200E71B46 /* StatusViewController.m in Sources */,
 				FB52D7A91D3EA52E009BDC84 /* AFURLResponseSerialization.m in Sources */,
+				695B4F8B1D5DA5CD009FF359 /* UPImageViewController.m in Sources */,
 				FB74893F1D3EAC62003FDCB7 /* UUChart.m in Sources */,
 				FB74894E1D3EAC9C003FDCB7 /* HearModel.m in Sources */,
-				69FC4D381D4F6E290052D711 /* ShareActionView.m in Sources */,
 				FB52D7B91D3EA52E009BDC84 /* MASLayoutConstraint.m in Sources */,
 				FB7489551D3EAD25003FDCB7 /* MEViewController.m in Sources */,
 				FB52D7B31D3EA52E009BDC84 /* UIProgressView+AFNetworking.m in Sources */,
 				FB7489411D3EAC62003FDCB7 /* UUColor.m in Sources */,
+				695B4F871D5DA5BE009FF359 /* ShareActionView.m in Sources */,
 				FB52D7C01D3EA52E009BDC84 /* UIView+GetViewController.m in Sources */,
 				FB7489311D3EAC56003FDCB7 /* AYLineLayer.m in Sources */,
 				FB52D7AE1D3EA52E009BDC84 /* AFImageDownloader.m in Sources */,
@@ -1089,6 +1098,7 @@
 				FB52D7DC1D3EA788009BDC84 /* UserGuideViewController.m in Sources */,
 				69F85B1A1D40DCB900BD8484 /* ChartView.m in Sources */,
 				FB52D7A81D3EA52E009BDC84 /* AFURLRequestSerialization.m in Sources */,
+				695B4F831D5DA586009FF359 /* StatusViewController.m in Sources */,
 				FB52D7E31D3EA99F009BDC84 /* RegisterView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
