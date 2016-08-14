@@ -164,10 +164,6 @@
 }
 
 
-//打开数据库，如果没有数据库则创建一个-----------------------------------------xzl
-
-
-
 -(void)getRegisterName:(NSString *)name pass:(NSString *)pass  image:(UIImage *)image
 {
     
@@ -190,8 +186,6 @@
         NSLog(@"错误的原因:%@",error);
     }];
 }
-
-//获取k（前k星期）值然后 返回那个星期每天双方产生的次数并对应到时间轴
 
 
 - (void)didReceiveMemoryWarning {
