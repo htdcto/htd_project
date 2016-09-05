@@ -8,6 +8,11 @@
 
 #import "Helper.h"
 #import "BDViewController.h"
+#import "DB.h"
+#import "MainAryViewController.h"
+#import "StatusViewController.h"
+#import "Constant.h"
+
 
 @implementation Helper
 
@@ -35,7 +40,16 @@ static Helper *helper = nil;
 {
     [[EMClient sharedClient] addDelegate:self delegateQueue:nil];
     [[EMClient sharedClient].contactManager addDelegate:self delegateQueue:nil];
+    [[EMClient sharedClient].chatManager addDelegate:self delegateQueue:nil];
 }
+/*
+-(void)dealloc
+{
+    [[EMClient sharedClient] removeDelegate:self];
+    [[EMClient sharedClient].contactManager removeDelegate:self];
+    [[EMClient sharedClient].chatManager removeDelegate:self];
+}
+*/
 
 #pragma mark - EMContactManagerDelegate
 - (void)didReceiveFriendInvitationFromUsername:(NSString *)aUsername
@@ -44,20 +58,68 @@ static Helper *helper = nil;
     NSString *username =aUsername;
     NSString *aleraTitle = @"请求与您绑定";
     NSString *alert = [username stringByAppendingString:aleraTitle];
-    NSLog(@"%@",username);
-    [self.delegate addFriendNotice:username alert:alert];
-//绑定提示框截止
+    if(_bdVC){
+        [_bdVC addFriendNotice:username alert:alert];
+    }
+    else
+    {
+        extern_name = username;
+        extern_alert = alert;
+    }
 }
 
 - (void)didReceiveAgreedFromUsername:(NSString *)aUsername
 {
-    [self.delegate didReceiveAgreeFromFriendNotice:aUsername];
+    if(_bdVC)
+    {
+    [_bdVC didReceiveAgreeFromFriendNotice:aUsername];
+    }
+    else
+    {
+        extern_agreename = aUsername;
+    }
 }
 
 - (void)didReceiveDeclinedFromUsername:(NSString *)aUsername
 {
-    [self.delegate didReceiveDeclineFromFriendNotice:aUsername];
+    if(_bdVC)
+    {
+    [_bdVC didReceiveDeclineFromFriendNotice:aUsername];
+    }
+    else
+    {
+        extern_declinename = aUsername;
+    }
 }
+
+
+#pragma mark - EMChatManagerChatDelegate
+
+- (void)didReceiveCmdMessages:(NSArray *)aCmdMessages
+{
+  if ( JustLogin == YES)
+    {
+        aCmdMessages = nil;
+        JustLogin = NO;
+    }
+    for (EMMessage *message in aCmdMessages)
+
+    {
+        EMCmdMessageBody *body = (EMCmdMessageBody *)message.body;
+        
+        if ([body.action isEqualToString:UpdateLocalDBAndServer]) {
+            [_mavc updateHeartMessage];
+    }
+        if([body.action isEqualToString:UpdateBackImage]){
+           [_mavc setBackImage];
+        }
+        if ([body.action isEqualToString:UpdateStatusImage])
+        {
+            [_svc backImageDown];
+        }
+    }
+}
+
 
 #pragma mark -
 //-------------------------------------------------

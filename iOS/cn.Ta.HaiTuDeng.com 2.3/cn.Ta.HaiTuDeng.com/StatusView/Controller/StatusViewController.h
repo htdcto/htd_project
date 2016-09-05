@@ -11,5 +11,6 @@
 @interface StatusViewController : UIViewController
 @property (strong, nonatomic) IBOutlet UIImageView *BJImage;
 
+-(void)backImageDown;
 
 @end

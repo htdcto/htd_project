@@ -7,8 +7,25 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ManTableViewCell.h"
 
-@interface InformationViewController : UIViewController
+#import "MainModel.h"
+
+@interface InformationViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+
+//列表
+@property (nonatomic,strong)UITableView *tableView;
+//数据源
+@property (nonatomic,strong)NSMutableArray *dataArray;
+//网址
+@property (nonatomic,copy)NSString *url;
+//页数
+@property (nonatomic,assign)int pagenum;
+//设置网址
+-(void)setMyUrl;
+//请求数据
+-(void)loadData;
+
 
 @end
 

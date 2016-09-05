@@ -15,8 +15,8 @@
 }
 +(instancetype)shareInit;
 -(void)openOrCreateDB;
--(void)updateDBAfterLoginSuccess:(NSString *)Uname;
+-(void)updateDBAfterLoginSuccess:(NSString *)Uname successful:(void(^)(void))response;
 -(void)execSql:(NSString *)sql;
--(NSMutableArray *)upTimestamp:(int)key;
--(NSMutableArray *)caculateTheCountOfTimestampFromServer:(int)k;
+-(NSMutableArray *)upTimestamp:(NSInteger)key;
+-(NSMutableArray *)caculateTheCountOfTimestampFromServer:(NSInteger)k :(NSInteger)startIndex;
 @end

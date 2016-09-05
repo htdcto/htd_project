@@ -36,6 +36,7 @@
 }
 
 #pragma mark - 懒加载初始化控件
+/*
 - (UIImageView *)backImageView
 {
     if (_backImageView == nil) {
@@ -51,6 +52,7 @@
     
     return _backImageView;
 }
+*/
 
 - (UIView *)nameDown
 {
@@ -72,6 +74,7 @@
     return _nameDown;
 }
 
+
 - (UIImageView *)nameImageV
 {
     if (_nameImageV == nil) {
@@ -89,6 +92,7 @@
     
     return _nameImageV;
 }
+
 
 - (UITextField *)nameTextF
 {
@@ -129,6 +133,7 @@
     return _passDown;
 }
 
+
 - (UIImageView *)passImageV
 {
     if (_passImageV == nil) {
@@ -145,6 +150,7 @@
     
     return _passImageV;
 }
+
 
 - (UITextField *)passWordF
 {
@@ -172,7 +178,7 @@
         self.loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _loginButton.layer.masksToBounds = YES;
         _loginButton.layer.cornerRadius = 15;
-        _loginButton.backgroundColor = colorRGBA(98, 230, 66, 0.8);
+        _loginButton.backgroundColor = colorRGBA(8, 122, 252, 0.5);
         [_loginButton setTitle:@"登  录" forState:UIControlStateNormal];
         [_loginButton addTarget:self action:@selector(loginButtonAction) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_loginButton];
@@ -196,7 +202,7 @@
         [_registerButton setTitle:@"注  册" forState:UIControlStateNormal];
         _registerButton.layer.masksToBounds = YES;
         _registerButton.layer.cornerRadius = 15;
-        _registerButton.backgroundColor = colorRGBA(98, 230, 66, 0.8);
+        _registerButton.backgroundColor = colorRGBA(8, 122, 252, 0.5);
         [_registerButton addTarget:self action:@selector(registerButtonAction:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_registerButton];
         [_registerButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -211,12 +217,12 @@
     
     return _registerButton;
 }
-
+/*
 - (void)setBackImage:(UIImage *)backImage
 {
     [self.backImageView setImage:backImage];
 }
-
+*/
 #pragma mark - init方法
 // 防止外部调用init方法不走我们初始化控件
 - (instancetype)init
@@ -230,8 +236,8 @@
 {
     if (self = [super initWithFrame:frame]) {
         // 添加背景图片
-        [self backImageView];
-        [self addNotification];
+       // [self backImageView];
+       [self addNotification];
       
         // 初始化各控件
         [self nameTextF];
@@ -310,12 +316,6 @@
     // 判断登录页面的控件里有没有值
     if ([_nameTextF.text isEqualToString:@""] || [_passWordF.text isEqualToString:@""]) {
         
-#warning long 自动登录
-        //登陆成功后把用户名和密码存储到UserDefault
-        
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-       // id mainViewController = [storyboard instantiateViewControllerWithIdentifier:@"MainView"];
-        
         UIViewController *vc = [self theViewController];
         [vc showTheAlertView:vc andAfterDissmiss:1.5 title:@"请输入用户名密码" message:@""];
         
@@ -332,12 +332,12 @@
     // 判断注册页面控件里是否都有值
     if ([_regist.nameTextF.text isEqualToString:@""] || [_regist.passTextF.text isEqualToString:@""] ) {
         UIViewController *theVC = [self theViewController];
-        [theVC showTheAlertView:theVC andAfterDissmiss:1.5 title:@"请输入完全" message:@""];
+        [theVC showTheAlertView:theVC andAfterDissmiss:1.5 title:@"请输入帐号或密码" message:@""];
         return;
     }
     
     // 返回注册的信息
-    [self.delegate getRegisterName:_regist.nameTextF.text pass:_regist.passTextF.text   image:self.regist.headerImageButton.imageView.image];
+    [self.delegate getRegisterName:_regist.nameTextF.text pass:_regist.passTextF.text image:self.regist.headerImageButton.imageView.image];
 }
 
 // 返回到登录页面

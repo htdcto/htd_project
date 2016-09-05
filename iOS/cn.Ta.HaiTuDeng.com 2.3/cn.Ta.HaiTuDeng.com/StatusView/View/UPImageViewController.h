@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Message.h"
+#import "Constant.h"
 
 @interface UPImageViewController : UIViewController
+@property (nonatomic,strong)UIAlertController *alertController;
 
 //选择表情框
 @property (strong, nonatomic) IBOutlet UIScrollView *BqScrollView;

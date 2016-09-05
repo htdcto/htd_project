@@ -26,7 +26,8 @@
 
 - (id)initWithFrame:(CGRect)frame
     WithSourceArray:(NSArray *)array
-      WithIconArray:(NSArray *)iconArray;
+      WithIconArray:(NSArray *)iconArray
+     WithIconString:(NSString *)String;
 
 //只有上传
 -(id)initWithFrame:(CGRect)frame WithSourceArray:(NSArray *)array WithInconArray:(NSArray *)inconAray;

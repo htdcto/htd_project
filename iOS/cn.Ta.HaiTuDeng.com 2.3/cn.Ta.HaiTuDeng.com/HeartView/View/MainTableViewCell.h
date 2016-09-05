@@ -7,10 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HearModel.h"
 @interface MainTableViewCell : UITableViewCell
 
--(void)loadDataFromModel:(HearModel *)model;
+//-(void)loadDataFromModel:(HearModel *)model;
 
 @property (strong, nonatomic) IBOutlet UILabel *Time_Label;
 @property (strong, nonatomic) IBOutlet UIImageView *Time_Image;

@@ -7,6 +7,7 @@
 //
 
 #import "StatusViewController.h"
+#import "Helper.h"
 
 @interface StatusViewController ()<UIImagePickerControllerDelegate,ShareActionViewDelegate,UINavigationControllerDelegate>
 {
@@ -15,47 +16,77 @@
 @property (nonatomic,strong)NSDictionary *Diction;
 @property (nonatomic,strong)ShareActionView *actionView;
 @property (nonatomic,strong)UIImage *image;
+@property (nonatomic,strong)Helper *helper;
+
 @end
 
 @implementation StatusViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     self.view.backgroundColor = [UIColor whiteColor];
-    
+    _BJImage.userInteractionEnabled = YES;
+    UITapGestureRecognizer *singleTap =[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(onClickImage)];
+    [_BJImage addGestureRecognizer:singleTap];
     [self backImageDown];
     
     //**************************背景
     //****************我的背景图片********************
-    
-    
-    
-    
 }
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.delegate=self;
+    //异步更新图片
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(queue, ^{
+    [self backImageDown];
+    });
+    //友盟页面统计
+    [MobClick beginLogPageView:@"状态页面"];
+
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    //结束友盟页面统计
+    [MobClick endLogPageView:@"状态页面"];
+}
+
 -(void)backImageDown
 {
+    
+    //异步下载状态图片
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(queue, ^{
+        
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSString *Uname = [userDefaults objectForKey:@"name"];
     NSString *Tname = [userDefaults objectForKey:@"Ttel"];
     NSDictionary *dic = @{@"Utel":Uname,@"Ttel":Tname};
-    
-    [LDXNetWork GetThePHPWithURL:STATUSEDOWN par:dic success:^(id responseObject) {
-        if ([responseObject[@"success"]isEqualToString:@"1"]) {
-            NSString *Utel = responseObject[@"Utel"];
-            NSString *uTime = responseObject[@"Time"];
-            NSString *Url = responseObject [@"Url"];
-            NSString *Mood = responseObject[@"Mood"];
-            _Diction = @{@"Utel":Utel,@"Time":uTime,@"URL":Url,@"Mood":Mood,};
-            NSLog(@"%@",responseObject);
+
+        [LDXNetWork GetThePHPWithURL:address(@"/ingimagedown.php") par:dic success:^(id responseObject) {
+            if ([responseObject[@"success"]isEqualToString:@"1"]) {
+                NSString *Utel = responseObject[@"Utel"];
+                NSString *uTime = responseObject[@"Time"];
+                NSString *Url = responseObject [@"Url"];
+                NSString *Mood = responseObject[@"Mood"];
+                
+                if (Utel == nil) {
+                    
+                }else{
+                    _Diction = @{@"Utel":Utel,@"Time":uTime,@"URL":Url,@"Mood":Mood,};
+                    NSLog(@"%@",responseObject);
+                }
+            }
+              [self backImage];
             
+        } error:^(NSError *error) {
+            NSLog(@"error");
             
-        }
-        [self backImage];
-    } error:^(NSError *error) {
-        NSLog(@"错了");
-        
-    }];
-    
+        }];
+    });
 }
 -(void)backImage
 {
@@ -67,7 +98,10 @@
     _image = [UIImage imageWithData:data];
     if(_image==nil)
     {
+        dispatch_async(dispatch_get_main_queue(),^{
+        [_BJImage setImage:nil];
         _BJImage.backgroundColor = [UIColor colorWithRed:(255/255.0f) green:(235/255.0f) blue:(227/255.0f) alpha:0.5];
+                    });
         
         
     }
@@ -75,29 +109,24 @@
     {
         if(Utel==Uname)
         {
+            dispatch_async(dispatch_get_main_queue(),^{
             [_BJImage setImage:_image];
+            });
         }
         else
         {
+            dispatch_async(dispatch_get_main_queue(),^{
             [_BJImage setImage:_image];
+            });
             
             NSString *Utel = [_Diction objectForKey:@"Utel"];
             NSDictionary *dic = @{@"Ttel":Utel};
-            [LDXNetWork GetThePHPWithURL:DELETEIMAGE par:dic success:^(id responseObject)
-             {} error:^(NSError *error) {}];
+            [LDXNetWork GetThePHPWithURL:address(@"/ingimagedelete.php") par:dic success:
+             ^(id repsonseObject){} error:^(NSError *error){}
+             ];
             
         }
-        
-        
     }
-    
-    
-    _BJImage.userInteractionEnabled = YES;
-    [_BJImage setImage:_image];
-    UITapGestureRecognizer *singleTap =[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(onClickImage)];
-    [_BJImage addGestureRecognizer:singleTap];
-    
-    
 }
 -(void)onClickImage
 {
@@ -182,36 +211,34 @@
                 }
             }
         }
-    
+        
     }
-    
-    
-    
-    
     
     if (_image == nil)
     {
         if (!_actionView)
         {
-            _actionView = [[ShareActionView alloc]initWithFrame:CGRectMake(0,[UIScreen mainScreen].bounds.size.height-110,[UIScreen mainScreen].bounds.size.width, 0) WithSourceArray:@[@"上传"] WithInconArray:@[@"sns_icon_24"]];
+            _actionView = [[ShareActionView alloc]initWithFrame:CGRectMake(0,[UIScreen mainScreen].bounds.size.height-110,[UIScreen mainScreen].bounds.size.width, 0) WithSourceArray:@[@"上传"] WithInconArray:@[@"UP"]];
             _actionView.delegate = self;
         }
     }
-    else 
+    else
     {
-        _actionView = [[ShareActionView alloc]initWithFrame:CGRectMake(0,[UIScreen mainScreen].bounds.size.height , [UIScreen mainScreen].bounds.size.width, 0) WithSourceArray:@[display,@"表情",@"上传我的状态",@"定位",] WithIconArray:@[@"sns_icon_24",StrImage,@"sns_icon_24",@"sns_icon_24",]];
-       
+        _actionView = [[ShareActionView alloc]initWithFrame:CGRectMake(0,[UIScreen mainScreen].bounds.size.height , [UIScreen mainScreen].bounds.size.width, 0) WithSourceArray:@[@"表情",@"上传我的状态",] WithIconArray:@[StrImage,@"UP",] WithIconString:display];
+        
         _actionView.delegate = self;
-    
+        
     }
     return _actionView;
     
 }
 - (void)shareToPlatWithIndex:(NSInteger)index{
     NSLog(@"index = %ld",index);
-    if (index == 5||index ==2) {
+    if (index == 5||index ==1) {
         UPImageViewController * UpImage = [[UPImageViewController alloc]init];
-        [self presentViewController:UpImage animated:YES completion:nil];
+        [self.navigationController showViewController:UpImage sender:nil];
+        
+        
     }
     else {
         NSLog(@"你点谁呢～！");
@@ -223,7 +250,15 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+- (void)navigationController:(UINavigationController*)navigationController willShowViewController:(UIViewController*)viewController animated:(BOOL)animated{
+    dispatch_after(0.2, dispatch_get_main_queue(), ^{
+        
+        [_BJImage setImage:image];
+        image = nil;
+        self.navigationController.delegate=nil;
+    });
+    
+}
 /*
  #pragma mark - Navigation
  

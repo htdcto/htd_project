@@ -7,9 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import "EMSDK.h"
-#import "EMError.h"
-#import "Helper.h"
+#import "AppDelegate+Ta.h"
+#import "Appdelegate+UMeng.h"
 
 
 @interface AppDelegate ()
@@ -17,21 +16,24 @@
 @end
 
 @implementation AppDelegate
-
+#define TaAppleKey @"ta-htd#ta-htd"
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    //开始向环信注册企业和应用id
-    EMOptions *options = [EMOptions optionsWithAppkey:@"ta-htd#ta-htd"];
-    options.apnsCertName =@"nil";
-    [[EMClient sharedClient] initializeSDKWithOptions:options];
-    [Helper shareHelper];
-  //--------------------------xzl
-    
     self.window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
+    
+    NSString *aspnCerName = @"nil";
+    //开始向环信注册企业和应用id
+    EMOptions *options = [EMOptions optionsWithAppkey:TaAppleKey];
+    options.apnsCertName =aspnCerName;
+    [[EMClient sharedClient] initializeSDKWithOptions:options];
+    
+    // 用到友盟统计crash以及用户交互数据
+    [self setupUMeng];
+    
+    [self taApplication:application didFinishLaunchingWithOptions:launchOptions appkey:TaAppleKey apnsCertName:aspnCerName otherConfig:nil];
+    
     [self.window makeKeyAndVisible];
-    ViewController *VC = [[ViewController alloc]init];
-    self.window.rootViewController = VC;
     //判断是否第一次启动
     /*
     if(![[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"])

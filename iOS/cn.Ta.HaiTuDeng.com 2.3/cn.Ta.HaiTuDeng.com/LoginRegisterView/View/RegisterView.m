@@ -19,7 +19,7 @@
 {
     if (_backButton == nil) {
         self.backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _backButton.backgroundColor = [UIColor blackColor];
+        _backButton.backgroundColor = [UIColor grayColor];
         [_backButton setTitle:@"<" forState:UIControlStateNormal];
         _backButton.titleLabel.font = [UIFont systemFontOfSize:25.0f * screenH];
         [_backButton addTarget:self action:@selector(backButtonAction) forControlEvents:UIControlEventTouchUpInside];
@@ -75,7 +75,7 @@
     if (_registerButton == nil) {
         self.registerButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [self addSubview:_registerButton];
-        _registerButton.backgroundColor = colorRGBA(105, 243, 20, 0.8);
+        _registerButton.backgroundColor = colorRGBA(8, 122, 252, 0.5);
         _registerButton.layer.cornerRadius = 15;
         [_registerButton setTitle:@"注  册" forState:UIControlStateNormal];
         [_registerButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -88,23 +88,58 @@
     
     return _registerButton;
 }
-
 - (UIButton *)headerImageButton
 {
     if (_headerImageButton == nil) {
         self.headerImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_headerImageButton setImage:[UIImage imageNamed:@"zhenxiang.png"] forState:UIControlStateNormal];
+        [_headerImageButton setImage:[UIImage imageNamed:@"headerimage.png"] forState:UIControlStateNormal];
         [_headerImageButton addTarget:self action:@selector(selectUserImage) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_headerImageButton];
         [_headerImageButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.registerButton.mas_bottom).offset(50 * screenH);
-            make.left.mas_equalTo(80 * screenW);
-            make.right.mas_equalTo(self).offset(-80 * screenW);
-            make.bottom.equalTo(self).offset(-50 * screenH);
+            make.top.equalTo(self.registerButton.mas_bottom).offset(60 * screenH);
+            make.left.mas_equalTo(150 * screenW);
+            make.right.mas_equalTo(self).offset(-150 * screenW);
+            make.bottom.equalTo(self).offset(-270 * screenH);
         }];
     }
     
     return _headerImageButton;
+    
+}
+- (UIButton *)manChoose
+{
+    if (_manChoose == nil) {
+        self.manChoose = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_manChoose setImage:[UIImage imageNamed:@"Man.png"] forState:UIControlStateNormal];
+        [_manChoose addTarget:self action:@selector(setManSex) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:_manChoose];
+        [_manChoose mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.registerButton.mas_bottom).offset(60 * screenH);
+            make.left.mas_equalTo(29 * screenW);
+            make.right.equalTo(self.headerImageButton.mas_left).offset(-29 * screenW);
+            make.bottom.equalTo(self).offset(-60 * screenH);
+        }];
+    }
+    
+    return _manChoose;
+}
+
+- (UIButton *)womanChoose
+{
+    if (_womanChoose == nil) {
+        self.womanChoose = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_womanChoose setImage:[UIImage imageNamed:@"WoMan.png"] forState:UIControlStateNormal];
+        [_womanChoose addTarget:self action:@selector(setWomanSex) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:_womanChoose];
+        [_womanChoose mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.registerButton.mas_bottom).offset(60 * screenH);
+            make.left.equalTo(self.headerImageButton.mas_right).offset(29 * screenW);
+            make.right.mas_equalTo(-29 * screenW);
+            make.bottom.equalTo(self).offset(-60 * screenH);
+        }];
+    }
+    
+    return _womanChoose;
 }
 
 // 因为本页面textField都差不多, 把公共代码提取出来
@@ -114,7 +149,7 @@
     textField.placeholder = placeholder;
     textField.textAlignment = NSTextAlignmentCenter;
     textField.backgroundColor = colorRGBA(244, 244, 244, 1);
-    textField.layer.borderWidth = 1;
+   // textField.layer.borderWidth = 1;
     textField.layer.cornerRadius = 15;
     textField.returnKeyType = UIReturnKeyNext;
     [self addSubview:textField];
@@ -134,11 +169,13 @@
 {
     if (self = [super initWithFrame:frame]) {
         
-        self.backgroundColor = colorRGBA(222, 222, 222, 1);
+        self.backgroundColor = colorRGBA(255, 255, 255, 1);
         
         // 初始化控件
         [self backButton];
         [self headerImageButton];
+        [self manChoose];
+        [self womanChoose];
         
     }
     
@@ -181,7 +218,6 @@
     [self.headerImageButton setImage:ima forState:UIControlStateNormal];
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
-
 
 
 

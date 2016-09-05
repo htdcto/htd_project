@@ -22,4 +22,8 @@
 // 用户头像
 @property (nonatomic, strong) UIButton *headerImageButton;
 
+//性别选择
+@property (nonatomic, strong) UIButton *manChoose;
+@property (nonatomic, strong) UIButton *womanChoose;
+
 @end

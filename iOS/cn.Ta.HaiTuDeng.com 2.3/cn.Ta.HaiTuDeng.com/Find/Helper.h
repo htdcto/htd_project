@@ -9,15 +9,21 @@
 #import <Foundation/Foundation.h>
 //#import "BDViewController.h"
 //#import "ViewController.h"
+#import "ChatViewController.h"
 
 @protocol HelperDelegate <NSObject>
--(void)addFriendNotice:(NSString *)name alert:(NSString *)alertMessage;
 -(void)didReceiveAgreeFromFriendNotice:(NSString *)name;
 -(void)didReceiveDeclineFromFriendNotice:(NSString *)name;
 
 @end
-@interface Helper : NSObject<EMClientDelegate, EMContactManagerDelegate>
+@interface Helper : NSObject<EMClientDelegate, EMContactManagerDelegate,EMChatManagerDelegate>
 @property (nonatomic, assign) id<HelperDelegate> delegate;
-@property (nonatomic,strong) BDViewController *BD;
+
+
+@property (nonatomic,weak) MainAryViewController *mavc;
+@property (nonatomic,weak) StatusViewController *svc;
+@property (nonatomic, weak) ChatViewController *chatVC;
+@property (nonatomic,weak) BDViewController *bdVC;
+
 + (instancetype)shareHelper;
 @end

@@ -37,7 +37,9 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="eGj-Sq-Vsk"/>
                     </constraints>
-                    <state key="normal" title="申请绑定"/>
+                    <state key="normal" title="申请绑定">
+                        <color key="titleColor" red="0.033182962803256014" green="0.4802429915185441" blue="0.98950320512820511" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
                     <connections>
                         <action selector="SQBtn:" destination="-1" eventType="touchUpInside" id="VT0-YL-nuD"/>
                     </connections>

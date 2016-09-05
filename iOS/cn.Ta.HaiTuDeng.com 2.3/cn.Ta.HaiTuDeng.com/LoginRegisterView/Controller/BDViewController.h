@@ -10,6 +10,10 @@
 
 @interface BDViewController : UIViewController
 
+-(void)addFriendNotice:(NSString *)name alert:(NSString *)alertMessage;
+-(void)didReceiveAgreeFromFriendNotice:(NSString *)name;
+-(void)didReceiveDeclineFromFriendNotice:(NSString *)name;
+
 @property (weak, nonatomic) IBOutlet UITextField *BDTextField;
 @property (nonatomic,strong)UIAlertController *alertController;
 @end

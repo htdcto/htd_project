@@ -7,7 +7,8 @@
 //
 
 #import "DB.h"
-@interface DB()
+
+@interface DB()<HelperDelegate>
 @property (nonatomic,strong)NSDate*date;
 @property (nonatomic,strong)NSString *DBpath;
 @end
@@ -22,9 +23,11 @@
         _db = [[DB alloc]init];
     });
     return _db;
-}
+}   
 
--(void)updateDBAfterLoginSuccess:(NSString *)Uname{
+-(void)updateDBAfterLoginSuccess:(NSString *)Uname successful:(void(^)(void))response
+{
+
     sqlite3_stmt *tdbps;
     sqlite3_stmt *udbps;
     NSString *Ttimepoint;
@@ -62,7 +65,7 @@
     sqlite3_finalize (tdbps);
     
     NSDictionary *dic = @{@"Utel":Uname,@"Utime":Utimepoint,@"Ttime":Ttimepoint};
-    [LDXNetWork GetThePHPWithURL:SHUJUDOWN par:dic success:^(id responseObject) {
+    [LDXNetWork GetThePHPWithURL:address(@"/timedown.php") par:dic success:^(id responseObject) {
         NSArray *Utime = responseObject[@"Utime"];
         NSArray *Ttime = responseObject[@"Ttime"];
         
@@ -71,6 +74,10 @@
             for(int i=0; i<Utime.count; i++)
             {
                 NSString *insertStatement = [NSString stringWithFormat:@"insert into UTIME (time) values ('%@')",Utime[i]];
+                
+                // NSString *insertStatement = [NSString stringWithFormat:@"insert into UTIME(time) values('%@') where '%@' >=(select time from UTIME order by time desc limit 1 )",Utime[i],Utime[i]];
+                
+                
                 [self execSql:insertStatement];
             }
         }
@@ -84,6 +91,10 @@
             }
         }
         
+        if (response)
+        {
+            response();
+        }
         
     } error:^(NSError *error) {
         NSLog(@"登录失败的原因:%@",error);
@@ -129,7 +140,7 @@
 
 
 
--(NSArray *)upTimestamp:(int)key //刷新左侧具体时间表格子
+-(NSArray *)upTimestamp:(NSInteger)key //刷新左侧具体时间表格子
 {
  
     sqlite3_stmt *getu;
@@ -155,9 +166,9 @@
     [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
     NSString * sls =  [formatter stringFromDate :t];
     NSString * sls2 =  [formatter stringFromDate :t1];
-    NSDateFormatter * formatter1 = [[NSDateFormatter alloc ] init];
-    [formatter1 setDateFormat:@"YY年MM月dd日"];
-    NSString * getdateed =  [formatter1 stringFromDate :getdateing];
+    //NSDateFormatter * formatter1 = [[NSDateFormatter alloc ] init];
+    //[formatter1 setDateFormat:@"YY年MM月dd日"];
+    //NSString * getdateed =  [formatter1 stringFromDate :getdateing];
     NSString *uStatement = [NSString stringWithFormat:@"select time from TTIME where time < '%@' and time >= '%@'",sls2,sls];
     const char * getUTimeStamp = [uStatement UTF8String];
     sqlite3_prepare_v2(db, getUTimeStamp, -1, &getu, NULL);
@@ -174,13 +185,16 @@
         NSString * reseded =  [formatter1 stringFromDate :resed];
         [times addObject:reseded];
     }
-    NSArray *labelData = [[NSArray alloc]initWithObjects:getdateed,times,nil];
+    NSArray *labelData = [[NSArray alloc]initWithObjects:getdateing,times,nil];
     return labelData;
     
 }
 
--(NSMutableArray *)caculateTheCountOfTimestampFromServer:(int)k
+-(NSMutableArray *)caculateTheCountOfTimestampFromServer:(NSInteger)k :(NSInteger)startIndex
 {
+    
+    NSInteger DB_startIndex = startIndex;
+    NSString * SDB_startIndex=[NSString stringWithFormat:@"%ld",(long)DB_startIndex];
     NSMutableArray *weekCountForAll = [[NSMutableArray alloc]init];
     //时间处理
     NSDate *USDate = [NSDate date];
@@ -199,11 +213,14 @@
     //时间轴参数
     NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     NSInteger weekday = [gregorianCalendar component:NSCalendarUnitWeekday fromDate:USDate]-1;
+    if(weekday==0)
+    {weekday=7;}
     NSLog(@"今天是周%ld",weekday);
     NSInteger key=0;
     weekday=weekday+k*7;
     NSInteger mykey=weekday;
     long trun=now/(24*60*60);
+
     long trun1=trun-mykey+1;
     long trun2=trun1+7;
     long timepoint=(trun1*24*60*60-8*60*60);
@@ -246,7 +263,7 @@
         key=mykey;
     }
     else
-    {key=7;}
+    {key=8-DB_startIndex;}
     for(int i=0;i<key;i++)
     {
         int dmax=0;
@@ -291,18 +308,29 @@
         long fin=(timepoint+8*60*60)+i*86400-(8*60*60);
         NSDate * datenow = [[NSDate alloc] initWithTimeIntervalSince1970:fin];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        //[dateFormatter setDateFormat:@"yy/MM/dd"];
         [dateFormatter setDateFormat:@"MM-dd"];
         NSString *strDate = [dateFormatter stringFromDate: datenow];
         [arrayX addObject:strDate];
     }
-    
     [weekCountForAll addObject:longtime];
     [weekCountForAll addObject:longtimet];
     [weekCountForAll addObject:arrayX];
+    [weekCountForAll addObject:SDB_startIndex];
     
     
     return weekCountForAll;
+}
+
+-(void)insertHeartTimeInUtime:(NSString *)Utime
+{
+    NSString *sql = [NSString stringWithFormat:@"insert into UTIME (time) values ('%@')",Utime];
+    [self execSql:sql];
+}
+
+-(void)insertHeartTimeInTtime:(NSString *)Ttime
+{
+    NSString *sql = [NSString stringWithFormat:@"insert into Ttime (time) valuew ('%@')",Ttime];
+    [self execSql:sql];
 }
 
 @end

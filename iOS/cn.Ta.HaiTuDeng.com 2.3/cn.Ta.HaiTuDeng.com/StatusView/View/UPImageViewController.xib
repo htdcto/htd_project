@@ -124,6 +124,6 @@
         </view>
     </objects>
     <resources>
-        <image name="buttonimage" width="600" height="581"/>
+        <image name="buttonimage" width="800" height="800"/>
     </resources>
 </document>

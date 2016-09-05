@@ -7,10 +7,9 @@
 //
 
 #import "BDViewController.h"
-#import "Helper.h"
+#import "Constant.h"
 
-@interface BDViewController ()<HelperDelegate>
-@property (nonatomic,strong)Helper * helper;
+@interface BDViewController ()
 @property (nonatomic,strong)NSString * Uname;
 @property (nonatomic,strong)NSUserDefaults *userDefaults;
 @end
@@ -18,14 +17,35 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = NSLocalizedString(@"Ta.regist", @"login");
     _userDefaults = [NSUserDefaults standardUserDefaults];
-    self.helper =[Helper shareHelper];
-    _helper.delegate = self;
     self.view.backgroundColor = [UIColor whiteColor];
+    [self checkInformationFromIM];
+
+
     // Do any additional setup after loading the view from its nib.
 }
 
-
+-(void)checkInformationFromIM
+{
+    if(extern_name !=nil && extern_alert !=nil)
+    {
+        [self addFriendNotice:extern_name alert:extern_alert];
+        extern_name = nil;
+        extern_alert = nil;
+    }
+    if(extern_agreename != nil)
+    {
+        [self didReceiveAgreeFromFriendNotice:extern_agreename];
+        extern_agreename = nil;
+    }
+    if(extern_declinename != nil)
+    {
+        [self didReceiveDeclineFromFriendNotice:extern_declinename];
+        extern_declinename = nil;
+    }
+    
+}
 
 //登录本地服务器检测待绑定帐号是否注册，如果注册是否已经被绑定，如果没有被绑定则向IM框架发送添加好友通知。
 //注意：此时没有加入客户端本地校验不能跟自己绑定。
@@ -42,7 +62,7 @@
     else{
 
       //[LDXNetWork GetThePHPWithURL:LOGIN par:dic success:^(id responseObject)
-       [LDXNetWork GetThePHPWithURL:BINDCHECK par:dic success:^(id responseObject) {
+       [LDXNetWork GetThePHPWithURL:address(@"/bindcheck.php") par:dic success:^(id responseObject) {
            NSString *i = [responseObject objectForKey:@"success"];
            int a = [i intValue];
            switch (a) {
@@ -88,9 +108,7 @@
     [_userDefaults removeObjectForKey:@"Ttel"];
     [_userDefaults synchronize];
     
-    ViewController *VC = [[ViewController alloc]init];
-    
-    [self presentViewController:VC animated:YES completion:nil];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -130,15 +148,18 @@
     NSString *alertTitle = @"已同意与您绑定！";
     NSString *alert = [Ttel stringByAppendingString:alertTitle];
     [self showTheAlertView:self andAfterDissmiss:2.0 title:alert message:@""];
+    //绑定的时间
+    NSDate *date = [NSDate date];
+    [_userDefaults setObject:date forKey:@"BDTime"];
+    
     [_userDefaults setObject:Ttel forKey:@"Ttel"];
     
     NSString *Utel = [_userDefaults objectForKey:@"name"];
     NSDictionary *dic = @{@"Utel":Utel,@"Ttel":Ttel};
-    [LDXNetWork GetThePHPWithURL:YESBD par:dic success:^(id responseObject) {
+    [LDXNetWork GetThePHPWithURL:address(@"/bind.php") par:dic success:^(id responseObject) {
         if([responseObject[@"success"]isEqualToString:@"1"])
         {
-            MainAryViewController *Main = [[MainAryViewController alloc]init];
-            self.view.window.rootViewController = Main;
+            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_LOGINCHANGE object:@YES];
         
         }
         else
@@ -158,14 +179,16 @@
     if (!error) {
     [self showTheAlertView:self andAfterDissmiss:1.0 title:@"同意成功" message:@""];
         [_userDefaults setObject:Ttel forKey:@"Ttel"];
-        
+        //绑定的时间
+        NSDate *date = [NSDate date];
+        [_userDefaults setObject:date forKey:@"BDTime"];
+
         NSString *Utel = [_userDefaults objectForKey:@"name"];
         NSDictionary *dic = @{@"Utel":Utel,@"Ttel":Ttel};
-        [LDXNetWork GetThePHPWithURL:YESBD par:dic success:^(id responseObject) {
+        [LDXNetWork GetThePHPWithURL:address(@"/bind.php") par:dic success:^(id responseObject) {
             if([responseObject[@"success"]isEqualToString:@"1"])
             {
-                MainAryViewController *Main = [[MainAryViewController alloc]init];
-                self.view.window.rootViewController = Main;
+               [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_LOGINCHANGE object:@YES];
                 
             }
             else
@@ -203,6 +226,9 @@
         [self showTheAlertView:self andAfterDissmiss:1.0 title:@"操作失败，请稍候重试" message:@""];
     }
 }
+
+
+
 
 /*
 #pragma mark - Navigation

@@ -10,7 +10,7 @@
 
 @implementation MainTableViewCell
 
--(void)loadDataFromModel:(HearModel *)model
+//-(void)loadDataFromModel:(HearModel *)model
 {
     
 }

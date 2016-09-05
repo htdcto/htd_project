@@ -8,7 +8,7 @@
 
 //引导页
 #import "UserGuideViewController.h"
-#import "ViewController.h"
+#import "LoginViewController.h"
 @implementation UserGuideViewController
 
 - (void)viewDidLoad
@@ -64,7 +64,7 @@
 }
 - (void)firstpressed
  {
-     ViewController *VC= [[ViewController alloc]init];
+     LoginViewController *VC= [[LoginViewController alloc]init];
     [self presentViewController:VC animated:YES completion:nil]; //点击button跳转到根视图
 }
 @end

@@ -32,11 +32,8 @@
 // 登录页面背景图片
 @property (nonatomic, strong) UIImage *backImage;
 
-// 注册成功返回登录页面
-- (void)goToLoginView;
-
 #warning
 // 如果要获取登录信息和注册信息, 请签订代理(实现协议方法)
 @property (nonatomic, assign) id<LoginRegisterDelegate> delegate;
-
+- (void)goToLoginView;
 @end
