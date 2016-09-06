@@ -13,6 +13,7 @@
 #import "LoginViewController.h"
 #import "EMError.h"
 #import "EMSDK.h"
+#import "RankViewController.h"
 
 @interface TomViewController ()<EMChatManagerDelegate>
 
@@ -100,7 +101,7 @@
         if (indexPath.section == 0) {
             if (indexPath.row == 1) {
                 cell.textLabel.text = NSLocalizedString(@"约见达人", @"automatic login");
-                cell.accessoryType = UITableViewCellAccessoryNone;
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             }
             else if (indexPath.row == 2)
             {
@@ -179,6 +180,11 @@
         [self.navigationController pushViewController:chatController animated:YES];
             }
     }
+    if (indexPath.row ==2) {
+        RankViewController *rankController = [[RankViewController alloc]init];
+        [self.navigationController pushViewController:rankController animated:YES];
+    }
+    
 
 }
 - (void)didRemovedFromServer

@@ -13,47 +13,38 @@
 #import "DetaViewController.h"//详情
 
 
+#define ZIXUN @"http://120.26.62.17/ta/ta/title.php"
+
+
 #define WIDTH [UIScreen mainScreen].bounds.size.width
 #define HEIGHT [UIScreen mainScreen].bounds.size.height
 
 @interface InformationViewController ()
+@property (nonatomic,strong)NSString *filename;
+
 
 @end
 
 @implementation InformationViewController
 
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    //友盟页面统计
-    [MobClick beginLogPageView:@"情侣资讯"];
-}
-
--(void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    //结束友盟页面统计
-    [MobClick endLogPageView:@"情侣资讯"];
-}
-
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initData];
     [self createTableView];
-    //[self setMyUrl];
+    [self setMyUrl];
     [self loadData];
+    
+    
  }
 -(void)initData
 {
     self.dataArray = [NSMutableArray array];
     self.pagenum = 1;
 }
-//-(void)setMyUrl
-//{
-//    self.url = [NSString stringWithFormat:address(@"title.php")];
-//}
+-(void)setMyUrl
+{
+    self.url = [NSString stringWithFormat:ZIXUN];
+}
 -(void)createTableView
 {
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -80,7 +71,7 @@
         [self loadData];
     }];
     [header setTitle:@"马上就好" forState:MJRefreshStateRefreshing];
-    self.tableView.mj_header = header;
+    self.tableView.header = header;
     
 }
 -(void)addFooterRefresh
@@ -90,11 +81,11 @@
         self.pagenum ++;
         
         //重新请求数据
-        //[self setMyUrl];
+        [self setMyUrl];
         [self loadData];
         
     }];
-    self.tableView.mj_footer = footer;
+    self.tableView.footer = footer;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -103,6 +94,7 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ManTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BASE" forIndexPath:indexPath];
+    
     if (self.dataArray.count <=0) {
         return cell;
     }
@@ -123,68 +115,57 @@
     MainModel *model =self.dataArray[indexPath.row];
     detail.contentid = model.Id;
     detail.hidesBottomBarWhenPushed = YES;
-    //[self.navigationController pushViewController:detail animated:YES];
     [self.navigationController pushViewController:detail animated:YES];
-    //[self presentViewController:detail animated:YES completion:nil];
+    
     
 }
 -(void)loadData{
-    NSNumber *page = [NSNumber numberWithInt:self.pagenum];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString* plistPath1 = [paths objectAtIndex:0];
     
+    //在此处设置文件的名字补全其中的路径, 注意对于文件内存的修改是在内存之中完成的，然后直接把现在的数据一次性更新，这样减少了文件的读写的次数
+    _filename =[plistPath1 stringByAppendingPathComponent:@"InforText.plist"];
+    NSNumber *page = [NSNumber numberWithInt:self.pagenum];
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:page, @"pagenum", nil];
-    [LDXNetWork GetThePHPWithURL:address(@"title.php") par:dict success:^(id responseObject) {
+    if ([[NSFileManager defaultManager] fileExistsAtPath:_filename]) {
+        //从本地读缓存文件
+        //NSData *data = [NSData dataWithContentsOfFile:_filename];
+        NSArray *Ary = [NSArray arrayWithContentsOfFile:_filename];
+        for (NSDictionary *newDict in Ary) {
+            MainModel *model= [[MainModel alloc]init];
+            [model setValuesForKeysWithDictionary:newDict];
+            
+            [self.dataArray addObject:model];
+        }
+        
+    }
+
+    [LDXNetWork GetThePHPWithURL:ZIXUN par:dict success:^(id responseObject) {
+        
+        
         NSArray *resultAry = responseObject[@"date"];
         if ([resultAry isKindOfClass:[NSArray class]] && resultAry.count > 0) {
             for (NSDictionary *newDict in resultAry) {
                 MainModel *model= [[MainModel alloc]init];
                 [model setValuesForKeysWithDictionary:newDict];
                 [self.dataArray addObject:model];
+                [resultAry writeToFile:_filename atomically:YES];
+
             }
             [self.tableView reloadData];
             NSLog(@"11111%@",resultAry);
+            
         }else{
             
-            [self.tableView.mj_footer endRefreshingWithNoMoreData];
-            
+            [self.tableView.footer noticeNoMoreData];
         }
 
     } error:^(NSError *error) {
         
     }];
-    [self.tableView.mj_header endRefreshing];
-    [self.tableView.mj_footer endRefreshing];
-    /*
-    AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
-    manger.responseSerializer = [AFHTTPResponseSerializer serializer];
-    
-    NSNumber *page = [NSNumber numberWithInt:self.pagenum];
-    
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:page, @"pagenum", nil];
-    
-    [LDXNetWork GET:ZIXUN parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        
-        NSArray *resultAry = dic[@"date"];
-        if ([resultAry isKindOfClass:[NSArray class]] && resultAry.count > 0) {
-            for (NSDictionary *newDict in resultAry) {
-                MainModel *model= [[MainModel alloc]init];
-                [model setValuesForKeysWithDictionary:newDict];
-                [self.dataArray addObject:model];
-            }
-            [self.tableView reloadData];
-            NSLog(@"11111%@",resultAry);
-        }else{
-            
-            [self.tableView.footer noticeNoMoreData];
-        }
-        
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-    }];
     [self.tableView.header endRefreshing];
     [self.tableView.footer endRefreshing];
-     */
+   
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

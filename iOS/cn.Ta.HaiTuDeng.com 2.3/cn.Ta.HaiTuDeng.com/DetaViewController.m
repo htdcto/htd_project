@@ -13,6 +13,7 @@
 
 #define WIDTH [UIScreen mainScreen].bounds.size.width
 #define HEIGHT [UIScreen mainScreen].bounds.size.height
+#define XINAGQIng @"http://120.26.62.17/ta/ta/showinformation.php?Id=%@&Utel=%@"
 
 
 @interface DetaViewController ()
@@ -23,58 +24,60 @@
 @implementation DetaViewController
 
 - (void)viewDidLoad {
+    
+
+    
+  
     [super viewDidLoad];
     [self creaUI];
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"FlowerMan";
+    
+ 
+    
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear: animated];
     self.navigationController.navigationBarHidden = NO;
-    //友盟页面统计
-    [MobClick beginLogPageView:@"资讯详情"];
 }
 
--(void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    //结束友盟页面统计
-    [MobClick endLogPageView:@"资讯详情"];
-}
 
 -(void)creaUI
 {
+    /*mj
+   self.automaticallyAdjustsScrollViewInsets = NO;
+    self.webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, +64,WIDTH, HEIGHT)];
+    NSString *scrollPos = [_webView stringByEvaluatingJavaScriptFromString:@"scrollPos"];
+    scrollPos = [scrollPos stringByAppendingString:@" Version/7.0 Safari/9537.53"];
+    NSLog(@"cookie   %@",scrollPos);
+        [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"scrollTop":scrollPos}];
+     self.webView.scrollView.bounces = NO;
+   */
+    
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, +64,WIDTH, HEIGHT)];
     self.webView.scrollView.bounces = NO;
-    
-    NSString *url = [NSString stringWithFormat:address(@"showinformation.php?Id=%@"),self.contentid];
+
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *Utel = [userDefaults objectForKey:@"name"];
+
+    NSString *url = [NSString stringWithFormat:XINAGQIng,self.contentid,Utel];
+    NSLog(@"%@",url);
     
     NSURL *Url = [NSURL URLWithString:url];
     NSURLRequest *request = [NSURLRequest requestWithURL:Url];
+  
     
     //发送请求给服务器
     [self.webView loadRequest:request];
     
-    /*
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
-        NSDictionary *resultArr =dict[@"data"];
-        
-        _html = resultArr[@"body_html"];
-        
-        [self.webView loadHTMLString:_html baseURL:nil];
-        
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-    }];
-*/
-    [self.view addSubview:self.webView];
+        [self.view addSubview:self.webView];
+   
+
+   
+    
 }
 
 

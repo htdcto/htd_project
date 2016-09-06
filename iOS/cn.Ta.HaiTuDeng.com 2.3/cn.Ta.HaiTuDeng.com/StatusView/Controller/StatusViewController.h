@@ -10,7 +10,9 @@
 
 @interface StatusViewController : UIViewController
 @property (strong, nonatomic) IBOutlet UIImageView *BJImage;
+@property  NSInteger Ucount;
+@property  NSInteger Tcount;
 
 -(void)backImageDown;
-
+-(void)setPieChartView;
 @end

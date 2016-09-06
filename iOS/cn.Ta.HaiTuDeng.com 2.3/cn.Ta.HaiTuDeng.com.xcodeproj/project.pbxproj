@@ -260,6 +260,7 @@
 		696B751D1D6ED7A200D9EADA /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 696B751C1D6ED7A200D9EADA /* Message.m */; };
 		696B75221D6F0C4C00D9EADA /* Constant.m in Sources */ = {isa = PBXBuildFile; fileRef = 696B75211D6F0C4C00D9EADA /* Constant.m */; };
 		6970BBF01D7716480079A679 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6970BBEF1D7716480079A679 /* Localizable.strings */; };
+		69715B5B1D7ED4C40000D650 /* RankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69715B5A1D7ED4C40000D650 /* RankViewController.m */; };
 		6980FA4B1D78998400C16357 /* charts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6980FA4A1D78998400C16357 /* charts.swift */; };
 		69891F991D6144EE009C6319 /* ChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69891F951D6144EE009C6319 /* ChartView.m */; };
 		69891F9A1D6144EE009C6319 /* MainTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 69891F971D6144EE009C6319 /* MainTableViewCell.m */; };
@@ -805,6 +806,8 @@
 		696B75211D6F0C4C00D9EADA /* Constant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constant.m; sourceTree = "<group>"; };
 		696DC5A71D7B063400047439 /* ChatDemoUIDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatDemoUIDefine.h; sourceTree = "<group>"; };
 		6970BBEF1D7716480079A679 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		69715B591D7ED4C40000D650 /* RankViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RankViewController.h; sourceTree = "<group>"; };
+		69715B5A1D7ED4C40000D650 /* RankViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RankViewController.m; sourceTree = "<group>"; };
 		6980FA491D78998300C16357 /* cn.Ta.HaiTuDeng.com-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "cn.Ta.HaiTuDeng.com-Bridging-Header.h"; sourceTree = "<group>"; };
 		6980FA4A1D78998400C16357 /* charts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = charts.swift; sourceTree = "<group>"; };
 		69891F941D6144EE009C6319 /* ChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChartView.h; path = cn.Ta.HaiTuDeng.com/HeartView/Controller/ChartView.h; sourceTree = "<group>"; };
@@ -1907,11 +1910,21 @@
 		6970B9811D76B4E20079A679 /* Tom */ = {
 			isa = PBXGroup;
 			children = (
+				69715B551D7ED49D0000D650 /* Rank */,
 				6904EBB11D773E3C00E48922 /* ChatView */,
 				FB7489521D3EAD25003FDCB7 /* TomViewController.h */,
 				FB7489531D3EAD25003FDCB7 /* TomViewController.m */,
 			);
 			name = Tom;
+			sourceTree = "<group>";
+		};
+		69715B551D7ED49D0000D650 /* Rank */ = {
+			isa = PBXGroup;
+			children = (
+				69715B591D7ED4C40000D650 /* RankViewController.h */,
+				69715B5A1D7ED4C40000D650 /* RankViewController.m */,
+			);
+			name = Rank;
 			sourceTree = "<group>";
 		};
 		69891F891D6134F0009C6319 /* Class */ = {
@@ -2729,6 +2742,7 @@
 				FB52D7AA1D3EA52E009BDC84 /* AFURLSessionManager.m in Sources */,
 				FB52D7261D3EA3EB009BDC84 /* AppDelegate.m in Sources */,
 				6904EA201D77312800E48922 /* EMCDDeviceManager+Media.m in Sources */,
+				69715B5B1D7ED4C40000D650 /* RankViewController.m in Sources */,
 				6904EA691D77312800E48922 /* EaseUserModel.m in Sources */,
 				FB52D7B71D3EA52E009BDC84 /* MASConstraint.m in Sources */,
 				6904EA3C1D77312800E48922 /* UIScrollView+MJExtension.m in Sources */,

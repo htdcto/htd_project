@@ -14,7 +14,22 @@
 -(void)loadDataFromModel:(MainModel *)model
 {
     
+    NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *imageFilePath = [path stringByAppendingPathComponent:model.Id];
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:imageFilePath]) {
+        //NSData *data = [NSData dataWithContentsOfFile:_filename];
+        [self.iconImage setImageWithURL:[NSURL URLWithString:imageFilePath]placeholderImage:[UIImage imageNamed:@"Snip20160317_2"]];
+        
+    }
     [self.iconImage setImageWithURL:[NSURL URLWithString:model.Imageurl]placeholderImage:[UIImage imageNamed:@"Snip20160317_2"]];
+    
+    // 将取得的图片写入本地的沙盒中，其中0.5表示压缩比例，1表示不压缩，数值越小压缩比例越大
+    BOOL success = [UIImageJPEGRepresentation(self.iconImage.image, 0.5) writeToFile:imageFilePath  atomically:YES];
+    if (success){
+        
+        NSLog(@"写入本地成功");
+    }
     
     //标题
     /*biaoLable;

@@ -10,10 +10,10 @@
 #import "Helper.h"
 #import "ChartView.h"
 #import "cn.Ta.HaiTuDeng.com-Bridging-Header.h"
+#import "Message.h"
 
 @interface StatusViewController ()<UIImagePickerControllerDelegate,ShareActionViewDelegate,UINavigationControllerDelegate>
 {
-    UIView *_bgview;
 }
 @property (nonatomic,strong)NSDictionary *Diction;
 @property (nonatomic,strong)ShareActionView *actionView;
@@ -21,7 +21,9 @@
 @property (nonatomic,strong)Helper *helper;
 @property (nonatomic,strong)PieChartView *pieChartView;
 @property (nonatomic,strong)ChartView *cv;
+@property (nonatomic,strong)UPImageViewController *upvc;
 
+@property BOOL isViewVisible;
 
 @end
 
@@ -29,8 +31,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    _upvc = [[UPImageViewController alloc]init];
+    _upvc.svc = self;
     self.view.backgroundColor = [UIColor whiteColor];
+    _BJImage.backgroundColor = [UIColor colorWithRed:(255/255.0f) green:(235/255.0f) blue:(227/255.0f) alpha:0.5];
     _BJImage.userInteractionEnabled = YES;
     UITapGestureRecognizer *singleTap =[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(onClickImage)];
     [_BJImage addGestureRecognizer:singleTap];
@@ -44,9 +48,10 @@
     {
         [_pieChartView removeFromSuperview];
     }
-    NSString *Ucount = _Diction[@"Ucount"];
-    NSString *Tcount = _Diction[@"Tcount"];
-    NSArray *dayCountForAll = [[NSArray alloc]initWithObjects:Ucount,Tcount, nil];
+    
+    NSNumber *Ucount = [NSNumber numberWithInteger:_Ucount];
+    NSNumber *Tcount = [NSNumber numberWithInteger:_Tcount];
+    NSArray *dayCountForAll = [[NSArray alloc]initWithObjects:Ucount,Tcount,nil];
     self.pieChartView = [self.cv drawPieChart:dayCountForAll];
 
     [self.view addSubview:(self.pieChartView)];
@@ -62,11 +67,8 @@
     //****************我的背景图片********************
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    //异步更新图片
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_async(queue, ^{
-    [self backImageDown];
-    });
+    self.isViewVisible = YES;
+    [_BJImage setImage:_image];
     //友盟页面统计
     [MobClick beginLogPageView:@"状态页面"];
 
@@ -75,6 +77,7 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    self.isViewVisible = NO;
     //结束友盟页面统计
     [MobClick endLogPageView:@"状态页面"];
 }
@@ -96,16 +99,14 @@
                 NSString *tel = responseObject[@"Utel"];
                 NSString *Time = responseObject[@"Time"];
                 NSString *Url = responseObject [@"Url"];
-                NSString *Mood = responseObject[@"Mood"];
-                NSString *Ucount =responseObject[@"Ucount"];
-                NSString *Tcount = responseObject[@"Tcount"];
+                NSString *Mood = responseObject[@"Mood"] ;
+                _Ucount =[responseObject[@"Ucount"] integerValue];
+                _Tcount = [responseObject[@"Tcount"] integerValue];
+
                 //仅有当两个用户第一次使用，都没有发状态的情况，服务器返回数据除了双方点击次数
-                if (tel == nil) {
-                     _Diction = @{@"Ucount":Ucount,@"Tcount":Tcount};
-                }else{
-                    _Diction = @{@"tel":tel,@"Time":Time,@"URL":Url,@"Mood":Mood,@"Ucount":Ucount,@"Tcount":Tcount};
-                }
-            } [self setPieChartView];
+                _Diction = @{@"tel":tel,@"Time":Time,@"URL":Url,@"Mood":Mood};
+            }
+              [self setPieChartView];
               [self backImage];
             
         } error:^(NSError *error) {
@@ -122,36 +123,21 @@
     NSString *tel = _Diction[@"tel"];
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]];
     _image = [UIImage imageWithData:data];
-    if(_image==nil)
+    dispatch_async(dispatch_get_main_queue(),^{
+        if(self.isViewVisible)
+        [_BJImage setImage:_image];
+    });
+    if(tel != Uname)
     {
-        dispatch_async(dispatch_get_main_queue(),^{
-        [_BJImage setImage:nil];
-        _BJImage.backgroundColor = [UIColor colorWithRed:(255/255.0f) green:(235/255.0f) blue:(227/255.0f) alpha:0.5];
-                    });
-        
-        
-    }
-    else
-    {
-        if(tel==Uname)
-        {
-            dispatch_async(dispatch_get_main_queue(),^{
-            [_BJImage setImage:_image];
-            });
-        }
-        else
-        {
-            dispatch_async(dispatch_get_main_queue(),^{
-            [_BJImage setImage:_image];
-            });
-            
-            NSString *tel = [_Diction objectForKey:@"tel"];
-            NSDictionary *dic = @{@"Ttel":tel};
-            [LDXNetWork GetThePHPWithURL:address(@"/ingimagedelete.php") par:dic success:
-             ^(id repsonseObject){} error:^(NSError *error){}
-             ];
-            
-        }
+    NSString *tel = [_Diction objectForKey:@"tel"];
+    NSDictionary *dic = @{@"Ttel":tel};
+   [LDXNetWork GetThePHPWithURL:address(@"/ingimagedelete.php") par:dic success:^(id responseObject){
+                 if ([responseObject[@"success"]isEqualToString:@"1"]){
+                     Message *mes= [[Message alloc]init];
+                     [mes createCmdMessage:UpdateStatusImage];
+                     _image = nil;
+                 }
+             }error:^(NSError *error){}];
     }
 }
 -(void)onClickImage
@@ -261,8 +247,7 @@
 - (void)shareToPlatWithIndex:(NSInteger)index{
     NSLog(@"index = %ld",index);
     if (index == 5||index ==1) {
-        UPImageViewController * UpImage = [[UPImageViewController alloc]init];
-        [self.navigationController showViewController:UpImage sender:nil];
+        [self.navigationController showViewController:_upvc sender:nil];
         
         
     }
