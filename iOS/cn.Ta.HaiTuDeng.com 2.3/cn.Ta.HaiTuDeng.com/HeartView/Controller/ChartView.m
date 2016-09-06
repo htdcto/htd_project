@@ -22,9 +22,10 @@
 
 @interface ChartView ()<ChartViewDelegate>
 
-@property(nonatomic,strong) NSMutableArray *arrayX;//时间轴
 //@property (nonatomic,strong)NSDate * date;//当前时间
 @property (nonatomic,strong)LineChartView *LineChartView;
+@property (nonatomic,strong)PieChartView *PieChartView;
+
 
 
 @end
@@ -32,8 +33,9 @@
 BOOL full;
 @implementation ChartView
 
+//折线图
 
--(LineChartData *)setData:(NSArray *)weekCountForAll
+-(LineChartData *)setDataForLine:(NSArray *)weekCountForAll
 {
 
     
@@ -120,18 +122,19 @@ BOOL full;
     return data;
 }
 
--(UIView *)drawLineChart:(NSArray *)weekCountForAll
+-(LineChartView *)drawLineChart:(NSArray *)weekCountForAll
 {
 
     
     LineChartData *data =[[LineChartData alloc]init];
-    data = [self setData:weekCountForAll];
+    data = [self setDataForLine:weekCountForAll];
     self.LineChartView = [[LineChartView alloc] init];
     
     
     ChartXAxis *xAxis = self.LineChartView.xAxis;
     xAxis.drawGridLinesEnabled = NO;//不绘制网格线
     xAxis.labelPosition = XAxisLabelPositionBottom;//X轴的显示位置，默认是显示在上面的
+    xAxis._axisMinimum = 0;
     self.LineChartView.rightAxis.enabled = NO;//不绘制右边轴
     self.LineChartView.doubleTapToZoomEnabled =NO;
     [self.LineChartView setDragEnabled:NO];
@@ -141,6 +144,8 @@ BOOL full;
     return self.LineChartView;
 }
 
+//折线图
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -148,5 +153,61 @@ BOOL full;
     // Drawing code
 }
 */
+
+//饼状图
+-(PieChartData *)setDataForPie:(NSArray *)dayCountForAll
+{
+    NSString *Ucount = dayCountForAll[0];
+    NSString *Tcount = dayCountForAll[1];
+    double U = Ucount.doubleValue;
+    double T = Tcount.doubleValue;
+    NSMutableArray *yVals = [[NSMutableArray alloc]init];
+    BarChartDataEntry *entry = [[BarChartDataEntry alloc]initWithX:1 y:U];
+    [yVals addObject:entry];
+    entry = [[BarChartDataEntry alloc]initWithX:2 y:T];
+    [yVals addObject:entry];
+    
+    NSString *wo = @"我";
+    NSString *ta = @"Ta";
+    NSMutableArray *xVals = [[NSMutableArray alloc]init];
+    [xVals addObject:wo];
+    [xVals addObject:ta];
+    
+    PieChartDataSet *set = [[PieChartDataSet alloc]initWithValues:yVals label:@"更新状态数"];
+    set.drawValuesEnabled = YES;
+    
+    NSMutableArray *colors = [[NSMutableArray alloc]init];
+    [colors addObjectsFromArray:ChartColorTemplates.colorful];
+    [colors addObjectsFromArray:ChartColorTemplates.joyful];
+    [colors addObject:[UIColor blueColor]];
+    
+    set.colors =colors;
+    set.sliceSpace = 0;
+    set.selectionShift = 8;
+    set.xValuePosition = PieChartValuePositionInsideSlice;
+    set.yValuePosition = PieChartValuePositionOutsideSlice;
+    PieChartData *data = [[PieChartData alloc]initWithDataSet:set];
+    /*
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc]init];
+    formatter.numberStyle = NSNumberFormatterPercentStyle;
+    formatter.maximumFractionDigits = 0;
+    formatter.multiplier = @1.f;
+    [data setValueFormatter:formatter];
+     */
+    [data setValueTextColor:[UIColor brownColor]];
+    [data setValueFont:[UIFont systemFontOfSize:10]];
+    return data;
+    
+}
+
+-(PieChartView *)drawPieChart:(NSArray *)dayCountForAll
+{
+    PieChartData *data = [self setDataForPie:dayCountForAll];
+    self.PieChartView = [[PieChartView alloc]init];
+    self.PieChartView.data = data;
+    self.PieChartView.backgroundColor = [UIColor whiteColor];
+    return self.PieChartView;
+    
+}
 
 @end

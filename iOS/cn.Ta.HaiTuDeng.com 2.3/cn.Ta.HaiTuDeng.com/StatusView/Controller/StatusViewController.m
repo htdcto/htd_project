@@ -8,6 +8,8 @@
 
 #import "StatusViewController.h"
 #import "Helper.h"
+#import "ChartView.h"
+#import "cn.Ta.HaiTuDeng.com-Bridging-Header.h"
 
 @interface StatusViewController ()<UIImagePickerControllerDelegate,ShareActionViewDelegate,UINavigationControllerDelegate>
 {
@@ -17,6 +19,9 @@
 @property (nonatomic,strong)ShareActionView *actionView;
 @property (nonatomic,strong)UIImage *image;
 @property (nonatomic,strong)Helper *helper;
+@property (nonatomic,strong)PieChartView *pieChartView;
+@property (nonatomic,strong)ChartView *cv;
+
 
 @end
 
@@ -30,13 +35,33 @@
     UITapGestureRecognizer *singleTap =[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(onClickImage)];
     [_BJImage addGestureRecognizer:singleTap];
     [self backImageDown];
+    self.cv = [[ChartView alloc]init];
+}
+    
+-(void)setPieChartView
+{
+    if(_pieChartView != nil)
+    {
+        [_pieChartView removeFromSuperview];
+    }
+    NSString *Ucount = _Diction[@"Ucount"];
+    NSString *Tcount = _Diction[@"Tcount"];
+    NSArray *dayCountForAll = [[NSArray alloc]initWithObjects:Ucount,Tcount, nil];
+    self.pieChartView = [self.cv drawPieChart:dayCountForAll];
+
+    [self.view addSubview:(self.pieChartView)];
+    [self.pieChartView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.size.mas_equalTo(CGSizeMake(150,150));
+        make.center.mas_equalTo(self.view);
+    }];
+}
+
+
     
     //**************************背景
     //****************我的背景图片********************
-}
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    self.navigationController.delegate=self;
     //异步更新图片
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(queue, ^{
@@ -68,18 +93,19 @@
 
         [LDXNetWork GetThePHPWithURL:address(@"/ingimagedown.php") par:dic success:^(id responseObject) {
             if ([responseObject[@"success"]isEqualToString:@"1"]) {
-                NSString *Utel = responseObject[@"Utel"];
-                NSString *uTime = responseObject[@"Time"];
+                NSString *tel = responseObject[@"Utel"];
+                NSString *Time = responseObject[@"Time"];
                 NSString *Url = responseObject [@"Url"];
                 NSString *Mood = responseObject[@"Mood"];
-                
-                if (Utel == nil) {
-                    
+                NSString *Ucount =responseObject[@"Ucount"];
+                NSString *Tcount = responseObject[@"Tcount"];
+                //仅有当两个用户第一次使用，都没有发状态的情况，服务器返回数据除了双方点击次数
+                if (tel == nil) {
+                     _Diction = @{@"Ucount":Ucount,@"Tcount":Tcount};
                 }else{
-                    _Diction = @{@"Utel":Utel,@"Time":uTime,@"URL":Url,@"Mood":Mood,};
-                    NSLog(@"%@",responseObject);
+                    _Diction = @{@"tel":tel,@"Time":Time,@"URL":Url,@"Mood":Mood,@"Ucount":Ucount,@"Tcount":Tcount};
                 }
-            }
+            } [self setPieChartView];
               [self backImage];
             
         } error:^(NSError *error) {
@@ -93,7 +119,7 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSString *Uname = [userDefaults objectForKey:@"name"];
     NSString *imageUrl = _Diction [@"URL"];
-    NSString *Utel = _Diction[@"Utel"];
+    NSString *tel = _Diction[@"tel"];
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]];
     _image = [UIImage imageWithData:data];
     if(_image==nil)
@@ -107,7 +133,7 @@
     }
     else
     {
-        if(Utel==Uname)
+        if(tel==Uname)
         {
             dispatch_async(dispatch_get_main_queue(),^{
             [_BJImage setImage:_image];
@@ -119,8 +145,8 @@
             [_BJImage setImage:_image];
             });
             
-            NSString *Utel = [_Diction objectForKey:@"Utel"];
-            NSDictionary *dic = @{@"Ttel":Utel};
+            NSString *tel = [_Diction objectForKey:@"tel"];
+            NSDictionary *dic = @{@"Ttel":tel};
             [LDXNetWork GetThePHPWithURL:address(@"/ingimagedelete.php") par:dic success:
              ^(id repsonseObject){} error:^(NSError *error){}
              ];
@@ -250,16 +276,8 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (void)navigationController:(UINavigationController*)navigationController willShowViewController:(UIViewController*)viewController animated:(BOOL)animated{
-    dispatch_after(0.2, dispatch_get_main_queue(), ^{
-        
-        [_BJImage setImage:image];
-        image = nil;
-        self.navigationController.delegate=nil;
-    });
-    
-}
-/*
+
+ /*
  #pragma mark - Navigation
  
  // In a storyboard-based application, you will often want to do a little preparation before navigation

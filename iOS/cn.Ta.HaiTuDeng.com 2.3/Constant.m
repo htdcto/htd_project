@@ -22,8 +22,6 @@ NSString *const UpdateStatusImage = @"UpdateStatusImage";
 //判断是否为刚登录的设置，给环信cmd回调提供指示
 Boolean JustLogin = YES;
 
-UIImage *image = nil;
-
 //得到好友请求的名字和提示
 NSString *extern_name = nil;
 NSString *extern_alert = nil;

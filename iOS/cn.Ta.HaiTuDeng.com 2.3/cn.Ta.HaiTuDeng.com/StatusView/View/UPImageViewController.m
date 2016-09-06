@@ -91,7 +91,6 @@
     _image = info[UIImagePickerControllerEditedImage];
     // 给button按钮改变图片
     [self.StatusBtn setImage:_image forState:UIControlStateNormal];
-    image = _image;
     [picker dismissViewControllerAnimated:YES completion:nil];
     
     
@@ -117,7 +116,7 @@
             [self showTheAlertView:self andAfterDissmiss:1.5 title:@"表情不能为空" message:@""];
             });
         }else{
-                NSDictionary *dic = @{@"Utel":name,@"Time":date,@"Mood":_Strbtntag};
+                NSDictionary *dic = @{@"Utel":name,@"Mood":_Strbtntag};
                 [LDXNetWork PostThePHPWithURL:address(@"/ingimageup.php") par:dic image:_image uploadName:@"uploadimageFile" success:^(id response) {
                     NSString *success = response[@"success"];
                     if ([success isEqualToString:@"1"]) {

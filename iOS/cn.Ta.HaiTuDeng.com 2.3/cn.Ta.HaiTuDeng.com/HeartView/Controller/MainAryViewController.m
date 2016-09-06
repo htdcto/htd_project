@@ -17,7 +17,7 @@
 @interface MainAryViewController ()<UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate>
 
 @property(strong,nonatomic) ChartView *chartView;
-@property (strong,nonatomic)UIView *linechart;
+@property (strong,nonatomic)LineChartView *linechart;
 @property(nonatomic,strong) NSString* locationString;
 @property (nonatomic,strong)NSString * filepath;//tamax.plist,装对方数据
 @property(nonatomic,strong) NSTimer* timer;// 定义倒计时实现定时器
@@ -519,7 +519,6 @@ static MainAryViewController *mavc;
 
 -(void)scrollViewUI:(NSArray *)weekCountForAll
 {
-    _linechart = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, 220, 150)];
     _linechart.backgroundColor = [[UIColor alloc] colorWithAlphaComponent:0];
     _linechart = [_chartView drawLineChart:weekCountForAll];
     [self.view addSubview:(self.linechart)];
