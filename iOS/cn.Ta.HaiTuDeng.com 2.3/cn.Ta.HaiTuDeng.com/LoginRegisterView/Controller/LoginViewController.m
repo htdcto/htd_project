@@ -66,9 +66,9 @@
                 
                 else
                 {
-                    
                     NSString *Ttel = responseObject[@"Ttel"];
                     NSString *BdTime = responseObject[@"BdTime"];
+                    NSString *Expert = responseObject[@"expert"];
                     
                     NSThread *thread = [NSThread currentThread];
                     BOOL s = [thread isMainThread];
@@ -80,6 +80,7 @@
                     [userDefaults setObject:pass forKey:@"password"];
                     [userDefaults setObject:Ttel forKey:@"Ttel"];
                     [userDefaults setObject:BdTime forKey:@"BdTime"];
+                    [userDefaults setObject:Expert forKey:@"expert"];
                     NSLog(@".............%@",BdTime);
                     
                     _alreadyBind = YES;

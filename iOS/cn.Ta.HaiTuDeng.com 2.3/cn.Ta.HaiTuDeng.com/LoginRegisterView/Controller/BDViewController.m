@@ -159,6 +159,9 @@
     [LDXNetWork GetThePHPWithURL:address(@"/bind.php") par:dic success:^(id responseObject) {
         if([responseObject[@"success"]isEqualToString:@"1"])
         {
+            NSString *Expert = responseObject[@"expert"];
+            [_userDefaults setObject:Expert forKey:@"expert"];
+            
             [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_LOGINCHANGE object:@YES];
         
         }

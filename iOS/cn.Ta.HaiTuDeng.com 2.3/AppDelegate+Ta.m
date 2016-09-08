@@ -13,9 +13,9 @@
 
 -(void)taApplication:(UIApplication *)application
 didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-                      appkey:(NSString *)appkey
-                apnsCertName:(NSString *)apnsCertName
-                 otherConfig:(NSDictionary *)otherConfig
+              appkey:(NSString *)appkey
+        apnsCertName:(NSString *)apnsCertName
+         otherConfig:(NSDictionary *)otherConfig
 {
     //登录注册状态监听
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginStateChange:) name:NOTIFICATION_LOGINCHANGE object:nil];
@@ -36,9 +36,9 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
         
         [self.loginViewController Login:name pass:pass];
         //存在用户名跟密码，实现自动登录
-
+        
     }
-
+    
 }
 
 -(void)loginStateChange:(NSNotification *)notification
@@ -47,13 +47,13 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     if(loginSuccess){//登录成功加载主窗口控制器
         NSUserDefaults *user = [NSUserDefaults standardUserDefaults];
         if([user objectForKey:@"Ttel"]){
-        if(self.mainController == nil){
-            self.mainController = [[MainViewController alloc]init];
-            self.navigationController = [[UINavigationController alloc]initWithRootViewController:self.mainController];
-        }else{
-
-            self.navigationController = self.mainController.navigationController;
-        }
+            if(self.mainController == nil){
+                self.mainController = [[MainViewController alloc]init];
+                self.navigationController = [[UINavigationController alloc]initWithRootViewController:self.mainController];
+            }else{
+                
+                self.navigationController = self.mainController.navigationController;
+            }
         }
     }
     else{//登录失败加载登录页面控制器

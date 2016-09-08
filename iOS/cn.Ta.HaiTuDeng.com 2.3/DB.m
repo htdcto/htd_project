@@ -23,11 +23,11 @@
         _db = [[DB alloc]init];
     });
     return _db;
-}   
+}
 
 -(void)updateDBAfterLoginSuccess:(NSString *)Uname successful:(void(^)(void))response
 {
-
+    
     sqlite3_stmt *tdbps;
     sqlite3_stmt *udbps;
     NSString *Ttimepoint;
@@ -142,7 +142,7 @@
 
 -(NSArray *)upTimestamp:(NSInteger)key //刷新左侧具体时间表格子
 {
- 
+    
     sqlite3_stmt *getu;
     NSString * result;
     NSMutableArray * times=[[NSMutableArray alloc]init];
@@ -220,7 +220,7 @@
     weekday=weekday+k*7;
     NSInteger mykey=weekday;
     long trun=now/(24*60*60);
-
+    
     long trun1=trun-mykey+1;
     long trun2=trun1+7;
     long timepoint=(trun1*24*60*60-8*60*60);
@@ -301,7 +301,7 @@
         [longtime addObject: p];//我的折线
         [longtimet addObject:pt];//他的折线
     }
-   
+    
     NSMutableArray * arrayX=[[NSMutableArray alloc] init];
     for (long  i= 0 ;i <7;i++)
     {

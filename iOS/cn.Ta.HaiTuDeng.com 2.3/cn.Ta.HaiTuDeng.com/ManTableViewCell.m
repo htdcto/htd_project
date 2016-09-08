@@ -13,8 +13,9 @@
 @implementation ManTableViewCell
 -(void)loadDataFromModel:(MainModel *)model
 {
-    
-    NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *name = [[NSUserDefaults standardUserDefaults]objectForKey:@"name"];
+    NSString *pathComponent = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *path = [NSString stringWithFormat:@"%@/%@",pathComponent,name];
     NSString *imageFilePath = [path stringByAppendingPathComponent:model.Id];
     
     if ([[NSFileManager defaultManager] fileExistsAtPath:imageFilePath]) {

@@ -13,7 +13,7 @@
 #import "LoginViewController.h"
 #import "EMError.h"
 #import "EMSDK.h"
-#import "RankViewController.h"
+#import "OutsideViewController.h"
 
 @interface TomViewController ()<EMChatManagerDelegate>
 
@@ -49,24 +49,24 @@
 }
 
 
- - (void)tuchu {
+- (void)tuchu {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-     EMError *error = [[EMClient sharedClient] logout:YES];
-     if (error != nil){
-         NSLog(@"%@",error);
-     }else{
-         NSLog(@"退出成功");
-    //移除UserDefaults中存储的用户信息
-    [userDefaults removeObjectForKey:@"name"];
-    [userDefaults removeObjectForKey:@"password"];
-    [userDefaults removeObjectForKey:@"Ttel"];
-    [userDefaults synchronize];
-      
-    //登出友盟
-    [MobClick profileSignOff];
-
-    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LOGINCHANGE object:@NO];
-     }
+    EMError *error = [[EMClient sharedClient] logout:YES];
+    if (error != nil){
+        NSLog(@"%@",error);
+    }else{
+        NSLog(@"退出成功");
+        //移除UserDefaults中存储的用户信息
+        [userDefaults removeObjectForKey:@"name"];
+        [userDefaults removeObjectForKey:@"password"];
+        [userDefaults removeObjectForKey:@"Ttel"];
+        [userDefaults synchronize];
+        
+        //登出友盟
+        [MobClick profileSignOff];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_LOGINCHANGE object:@NO];
+    }
     
 }
 
@@ -78,7 +78,7 @@
     return 1;
 }
 
- 
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -97,32 +97,32 @@
             [subView removeFromSuperview];
         }];
     }
-
-        if (indexPath.section == 0) {
-            if (indexPath.row == 1) {
-                cell.textLabel.text = NSLocalizedString(@"约见达人", @"automatic login");
-                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            }
-            else if (indexPath.row == 2)
-            {
-                cell.textLabel.text = NSLocalizedString(@"礼品盒子", @"Apns Settings");
-                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            }
-            else if (indexPath.row == 3)
-            {
-                cell.textLabel.text = NSLocalizedString(@"个人推荐", @"Black List");
-                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            }
-            else if (indexPath.row == 4)
-            {
-                cell.textLabel.text = NSLocalizedString(@"情感走势", @"Debug");
-                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            }
+    
+    if (indexPath.section == 0) {
+        if (indexPath.row == 1) {
+            cell.textLabel.text = NSLocalizedString(@"约见达人", @"automatic login");
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
-    return cell;
+        else if (indexPath.row == 2)
+        {
+            cell.textLabel.text = NSLocalizedString(@"礼品盒子", @"Apns Settings");
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+        else if (indexPath.row == 3)
+        {
+            cell.textLabel.text = NSLocalizedString(@"个人推荐", @"Black List");
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+        else if (indexPath.row == 4)
+        {
+            cell.textLabel.text = NSLocalizedString(@"情感走势", @"Debug");
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
     }
-    
-    
+    return cell;
+}
+
+
 #pragma mark - Table view delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -158,9 +158,9 @@
 {
     EaseConversationModel *model = [[EaseConversationModel alloc] initWithConversation:conversation];
     if (model.conversation.type == EMConversationTypeChat) {
-                model.title = nil;
-                model.avatarURLPath = nil;
-        }
+        model.title = nil;
+        model.avatarURLPath = nil;
+    }
     return model;
 }
 
@@ -171,21 +171,22 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.row == 1) {
-            EMConversation *conversation = conversations[0];
-            if (conversation) {
-
-        ChatViewController *chatController = [[ChatViewController alloc]
-                                              initWithConversationChatter:conversation.conversationId conversationType:conversation.type];
-                chatController.title = nil;
-        [self.navigationController pushViewController:chatController animated:YES];
-            }
+        NSString *Expert = [[NSUserDefaults standardUserDefaults]objectForKey:@"expert"];
+        EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:Expert type:EMConversationTypeChat createIfNotExist:YES];;
+        if (conversation) {
+            
+            ChatViewController *chatController = [[ChatViewController alloc]
+                                                  initWithConversationChatter:conversation.conversationId conversationType:conversation.type];
+            chatController.title = nil;
+            [self.navigationController pushViewController:chatController animated:YES];
+        }
     }
     if (indexPath.row ==2) {
-        RankViewController *rankController = [[RankViewController alloc]init];
-        [self.navigationController pushViewController:rankController animated:YES];
+        OutsideViewController *outsideController = [[OutsideViewController alloc]init];
+        [self.navigationController pushViewController:outsideController animated:YES];
     }
     
-
+    
 }
 - (void)didRemovedFromServer
 {
@@ -197,13 +198,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

@@ -43,17 +43,17 @@ static Helper *helper = nil;
     [[EMClient sharedClient].chatManager addDelegate:self delegateQueue:nil];
 }
 /*
--(void)dealloc
-{
-    [[EMClient sharedClient] removeDelegate:self];
-    [[EMClient sharedClient].contactManager removeDelegate:self];
-    [[EMClient sharedClient].chatManager removeDelegate:self];
-}
-*/
+ -(void)dealloc
+ {
+ [[EMClient sharedClient] removeDelegate:self];
+ [[EMClient sharedClient].contactManager removeDelegate:self];
+ [[EMClient sharedClient].chatManager removeDelegate:self];
+ }
+ */
 
 #pragma mark - EMContactManagerDelegate
 - (void)didReceiveFriendInvitationFromUsername:(NSString *)aUsername
-                                    message:(NSString *)aMessage
+                                       message:(NSString *)aMessage
 {
     NSString *username =aUsername;
     NSString *aleraTitle = @"请求与您绑定";
@@ -72,7 +72,7 @@ static Helper *helper = nil;
 {
     if(_bdVC)
     {
-    [_bdVC didReceiveAgreeFromFriendNotice:aUsername];
+        [_bdVC didReceiveAgreeFromFriendNotice:aUsername];
     }
     else
     {
@@ -84,7 +84,7 @@ static Helper *helper = nil;
 {
     if(_bdVC)
     {
-    [_bdVC didReceiveDeclineFromFriendNotice:aUsername];
+        [_bdVC didReceiveDeclineFromFriendNotice:aUsername];
     }
     else
     {
@@ -97,21 +97,21 @@ static Helper *helper = nil;
 
 - (void)didReceiveCmdMessages:(NSArray *)aCmdMessages
 {
-  if ( JustLogin == YES)
+    if ( JustLogin == YES)
     {
         aCmdMessages = nil;
         JustLogin = NO;
     }
     for (EMMessage *message in aCmdMessages)
-
+        
     {
         EMCmdMessageBody *body = (EMCmdMessageBody *)message.body;
         
         if ([body.action isEqualToString:UpdateLocalDBAndServer]) {
             [_mavc updateHeartMessage];
-    }
+        }
         if([body.action isEqualToString:UpdateBackImage]){
-           [_mavc setBackImage];
+            [_mavc setBackImage];
         }
         if ([body.action isEqualToString:UpdateStatusImage])
         {

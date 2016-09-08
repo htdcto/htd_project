@@ -11,8 +11,8 @@
 @interface AppDelegate (Ta)
 - (void)taApplication:(UIApplication *)application
 didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-                    appkey:(NSString *)appkey
-              apnsCertName:(NSString *)apnsCertName
-               otherConfig:(NSDictionary *)otherConfig;
+               appkey:(NSString *)appkey
+         apnsCertName:(NSString *)apnsCertName
+          otherConfig:(NSDictionary *)otherConfig;
 
 @end

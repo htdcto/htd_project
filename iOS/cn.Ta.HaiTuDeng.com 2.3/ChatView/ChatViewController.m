@@ -248,16 +248,15 @@
 {
     [[EMClient sharedClient].chatManager removeDelegate:self];
     [[EMClient sharedClient].roomManager removeDelegate:self];
-//    [[ChatDemoHelper shareHelper] setChatVC:nil];
+//   [[ChatDemoHelper shareHelper] setChatVC:nil];
     
-/*    if (self.deleteConversationIfNull) {
+  if (self.deleteConversationIfNull) {
         //判断当前会话是否为空，若符合则删除该会话
         EMMessage *message = [self.conversation latestMessage];
         if (message == nil) {
             [[EMClient sharedClient].chatManager deleteConversation:self.conversation.conversationId deleteMessages:NO];
         }
     }
- */
     
     [self.navigationController popViewControllerAnimated:YES];
 }

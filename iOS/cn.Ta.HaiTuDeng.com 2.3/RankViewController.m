@@ -13,7 +13,10 @@
 
 @interface RankViewController ()
 @property(nonatomic,strong)NSArray *rank;
-
+@property(nonatomic,strong)NSDictionary *item;
+@property(nonatomic,strong)NSString *Uname;
+@property(nonatomic,strong)NSString *Tname;
+@property(nonatomic,strong)NSString *rankNum;
 @end
 
 @implementation RankViewController
@@ -53,8 +56,11 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Base"];
-    NSString *name = _rank[indexPath.row];
-    cell.textLabel.text = name;
+    _item = _rank[indexPath.row];
+    _Uname = [_item objectForKey:@"Utel"];
+    _Tname = [_item objectForKey:@"Ttel"];
+    _rank = [_item objectForKey:@"rank"];
+    
     cell.accessoryType = UITableViewCellSeparatorStyleNone;
     return cell;
 }

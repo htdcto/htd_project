@@ -12,7 +12,7 @@
 #import "Helper.h"
 #import "Constant.h"
 #import "cn.Ta.HaiTuDeng.com-Bridging-Header.h"
-#import "ChartView.h"
+#import "Charts.h"
 
 @interface MainAryViewController ()<UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate>
 

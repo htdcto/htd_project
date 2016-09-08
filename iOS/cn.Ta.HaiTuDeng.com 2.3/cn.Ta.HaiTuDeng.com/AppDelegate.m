@@ -34,41 +34,6 @@
     [self taApplication:application didFinishLaunchingWithOptions:launchOptions appkey:TaAppleKey apnsCertName:aspnCerName otherConfig:nil];
     
     [self.window makeKeyAndVisible];
-    //判断是否第一次启动
-    /*
-    if(![[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"])
-    {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstLaunch"];
-        NSLog(@"第一次启动");
-        //如果是第一次启动的话,使用UserGuideViewController (用户引导页面) 作为根视图
-        UserGuideViewController *userGuideViewController = [[UserGuideViewController alloc] init];
-        self.window.rootViewController = userGuideViewController;
-
-    }
-    else
-    {
-        NSLog(@"不是第一次启动");
-        //如果不是第一次启动的话,使用LoginViewController作为根视图
-        ViewController *VC = [[ViewController alloc] init];
-        NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-        NSString *name = [userDefault objectForKey:@"name"];
-        if (name == nil){
-            self.window.rootViewController = VC;
-        
-            
-        }
-        else{
-     
-            ViewController *VC = [[ViewController alloc] init];
-            NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-            NSString *name = [userDefault objectForKey:@"name"];
-            NSLog(@"账号是:%@",name);
-            MainAryViewController *Main = [[MainAryViewController alloc]init];
-            self.window.rootViewController = Main;
-        }
-
-    }
-     */
 
     return YES;
 }

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "cn.Ta.HaiTuDeng.com-Bridging-Header.h"
-@interface ChartView : UIViewController
+@interface ChartView : NSObject
 -(LineChartView *)drawLineChart:(NSArray *)weekCountForAll;
 -(PieChartView *)drawPieChart:(NSArray *)dayCountForAll;
 @end

@@ -20,14 +20,14 @@
     [MobClick startWithConfigure:UMConfigInstance];
     
 #if DEBUG
-        //打开调试模式
+    //打开调试模式
     [MobClick setLogEnabled:YES];
 #else
     [MobClick setLogEnabled:NO];
 #endif
-
-
-
+    
+    
+    
 }
 
 @end

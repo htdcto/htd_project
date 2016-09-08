@@ -120,7 +120,8 @@
     
 }
 -(void)loadData{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     NSString* plistPath1 = [paths objectAtIndex:0];
     
     //在此处设置文件的名字补全其中的路径, 注意对于文件内存的修改是在内存之中完成的，然后直接把现在的数据一次性更新，这样减少了文件的读写的次数

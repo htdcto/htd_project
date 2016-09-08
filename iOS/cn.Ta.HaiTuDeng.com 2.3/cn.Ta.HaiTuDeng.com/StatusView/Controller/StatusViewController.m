@@ -8,7 +8,7 @@
 
 #import "StatusViewController.h"
 #import "Helper.h"
-#import "ChartView.h"
+#import "Charts.h"
 #import "cn.Ta.HaiTuDeng.com-Bridging-Header.h"
 #import "Message.h"
 
@@ -102,12 +102,15 @@
                 NSString *Mood = responseObject[@"Mood"] ;
                 _Ucount =[responseObject[@"Ucount"] integerValue];
                 _Tcount = [responseObject[@"Tcount"] integerValue];
-
+                if(tel !=nil)
+                {
                 //仅有当两个用户第一次使用，都没有发状态的情况，服务器返回数据除了双方点击次数
                 _Diction = @{@"tel":tel,@"Time":Time,@"URL":Url,@"Mood":Mood};
+                [self setPieChartView];
+                [self backImage];
+                }
             }
-              [self setPieChartView];
-              [self backImage];
+
             
         } error:^(NSError *error) {
             NSLog(@"error");

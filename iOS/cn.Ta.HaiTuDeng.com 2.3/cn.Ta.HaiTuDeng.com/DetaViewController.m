@@ -64,7 +64,6 @@
     NSString *Utel = [userDefaults objectForKey:@"name"];
 
     NSString *url = [NSString stringWithFormat:XINAGQIng,self.contentid,Utel];
-    NSLog(@"%@",url);
     
     NSURL *Url = [NSURL URLWithString:url];
     NSURLRequest *request = [NSURLRequest requestWithURL:Url];
